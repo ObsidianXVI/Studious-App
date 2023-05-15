@@ -1,7 +1,6 @@
 library studious.views;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import '../design_system/design_system.dart';
 
 part './launch_view.dart';

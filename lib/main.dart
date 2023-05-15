@@ -11,8 +11,11 @@ class StudiousApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: LaunchView(
-        key: key,
+      theme: ThemeData(fontFamily: 'Rubik'),
+      home: Material(
+        child: LaunchView(
+          key: key,
+        ),
       ),
     );
   }

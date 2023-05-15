@@ -7,9 +7,17 @@ class LaunchView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        width: 200,
-        height: 200,
-        color: Colors.amber,
+        width: double.infinity,
+        height: double.infinity,
+        color: StudiousTheme.purple,
+        child: Center(
+          child: Text(
+            "Studious",
+            style: StudiousFont.megaTitle(
+              color: StudiousTheme.white,
+            ),
+          ),
+        ),
       ),
     );
   }
