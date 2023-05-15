@@ -1,16 +1,25 @@
-# studious
+# Studious
 
-A new Flutter project.
+Studious is an online platform that allows students to turn in and review their peers' assignments, as well as for teachers to view students' reviews and work.
 
-## Getting Started
+# Features
+## Teachers
+- create assignments, attach material, deadlines
+- create feedback/review templates
+    - when reviewing, the students’ feedback is guided by the questions in the template
+- allow anonymous reviewing
+- view all assignments overview
+- view each assignment overview (status of each student)
 
-This project is a starting point for a Flutter application.
+## Students
+- view assignments, related material
+- submit assignments (link, file, text)
+- review others’ assignments (view their assignment + comment on diff parts of it)
+    - upvoting system
+- view feedback
+- respond to feedback
+    - resolve/flag
 
-A few resources to get you started if this is your first Flutter project:
+# Install
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Usage Guide
