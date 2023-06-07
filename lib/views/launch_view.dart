@@ -11,11 +11,23 @@ class LaunchView extends StatelessWidget {
         height: double.infinity,
         color: StudiousTheme.purple,
         child: Center(
-          child: Text(
-            "Studious",
-            style: StudiousFont.megaTitle(
-              color: StudiousTheme.white,
-            ),
+          child: Column(
+            children: [
+              Text(
+                "Studious",
+                style: StudiousFont.megaTitle(
+                  color: StudiousTheme.white,
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, NavRoutes.students_classes);
+                },
+                child: const Text(
+                  'Students - Classes',
+                ),
+              ),
+            ],
           ),
         ),
       ),
