@@ -143,10 +143,12 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer>
               iconData: Icons.comment,
               action: () {
                 addOverlay(
-                  overlay: StudentFeedbackOverlay(
-                    feedbackItem: widget.assignment.feedbackItem!,
-                    dismiss: () => removeOverlay(),
-                  ),
+                  overlay: OverlayEntry(builder: (BuildContext context) {
+                    return StudentFeedbackOverlay(
+                      feedbackItem: widget.assignment.feedbackItem!,
+                      dismiss: () => removeOverlay(),
+                    );
+                  }),
                 );
               },
               enabled: widget.assignment.feedbackItem != null,
