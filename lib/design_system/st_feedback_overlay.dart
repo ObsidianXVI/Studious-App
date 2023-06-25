@@ -61,30 +61,29 @@ class StudentFeedbackOverlay extends OverlayEntry {
                   elevation: 3,
                   child: Padding(
                     padding: const EdgeInsets.all(10),
-                    child: Stack(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Positioned(
-                          top: 0,
-                          left: 0,
-                          child: Text(
-                            'Feedback',
-                            style: StudiousFont.viewTitle(),
-                          ),
-                        ),
-                        if (dismiss != null)
-                          Positioned(
-                            top: 0,
-                            right: 0,
-                            child: IconButton(
-                              onPressed: () {
-                                dismiss();
-                              },
-                              icon: const Icon(
-                                Icons.close,
-                                size: 30,
-                              ),
+                        Row(
+                          children: [
+                            Text(
+                              'Feedback',
+                              style: StudiousFont.viewTitle(),
                             ),
-                          )
+                            const Spacer(),
+                            if (dismiss != null)
+                              IconButton(
+                                onPressed: () {
+                                  dismiss();
+                                },
+                                icon: const Icon(
+                                  Icons.close,
+                                  size: 30,
+                                ),
+                              ),
+                          ],
+                        ),
                       ],
                     ),
                   ),
