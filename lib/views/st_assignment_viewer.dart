@@ -12,7 +12,8 @@ class Student_Assignment_Viewer extends StatefulWidget {
   State<StatefulWidget> createState() => Student_Assignment_ViewerState();
 }
 
-class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer> {
+class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer>
+    with OverlayTools {
   @override
   Widget build(BuildContext context) {
     return ViewScaffold(
@@ -114,6 +115,7 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer> {
                     iconData: Icons.close,
                     action: () {
                       widget.assignment.handedIn = false;
+                      widget.assignment.feedbackItem = null;
                       setState(() {});
                     },
                     enabled: true,
@@ -123,6 +125,8 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer> {
                     iconData: Icons.check,
                     action: () {
                       widget.assignment.handedIn = true;
+                      // dev only
+                      widget.assignment.feedbackItem = FeedbackItem();
                       setState(() {});
                     },
                     enabled: true,
@@ -131,8 +135,14 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer> {
             IconTextButton(
               label: 'View Feedback',
               iconData: Icons.comment,
-              action: () {},
-              enabled: widget.assignment.hasFeedback,
+              action: () {
+                addOverlay(
+                  overlay: StudentFeedbackOverlay(
+                    dismiss: () => removeOverlay(),
+                  ),
+                );
+              },
+              enabled: widget.assignment.feedbackItem != null,
             ),
             const SizedBox(height: 10),
           ],

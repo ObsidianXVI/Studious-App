@@ -8,9 +8,9 @@ class Assignment extends StudiousObject {
   final ReviewConfigs reviewConfigs;
   final DateTime created;
   final DateTime deadline;
+  FeedbackItem? feedbackItem;
   List<MaterialItem> submittedFiles;
   bool handedIn;
-  bool hasFeedback;
 
   Assignment({
     required this.assignmentName,
@@ -22,6 +22,6 @@ class Assignment extends StudiousObject {
     required this.deadline,
     required this.submittedFiles,
     required this.handedIn,
-    required this.hasFeedback,
+    required this.feedbackItem,
   });
 }

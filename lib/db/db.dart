@@ -32,7 +32,7 @@ class StudentDatabase {
           ),
           submittedFiles: [],
           handedIn: false,
-          hasFeedback: false,
+          feedbackItem: null,
         ),
       ],
     ),

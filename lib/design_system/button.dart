@@ -55,7 +55,7 @@ class IconTextButton extends StatelessWidget {
           border: enabled
               ? Border.all(
                   width: 1,
-                  color: StudiousTheme.darkPurple,
+                  color: StudiousTheme.purple,
                 )
               : null,
         ),
