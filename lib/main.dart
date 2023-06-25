@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:studious/db/db.dart';
 import 'package:studious/design_system/design_system.dart';
 import './views/views.dart' as views;
 import './core/studious_core.dart' as core;
@@ -13,6 +14,7 @@ class StudiousApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'Rubik',
         inputDecorationTheme: const InputDecorationTheme(
@@ -26,11 +28,12 @@ class StudiousApp extends StatelessWidget {
       routes: {
         core.NavRoutes.students_classes: (BuildContext context) {
           return Material(
-            child: views.Student_Classes_View(),
+            child: views.Student_Classes_View(
+              classes: StudentDatabase.classes.values.toList(),
+            ),
           );
         },
-/*         '/students/assignment': (BuildContext context) {},
-        '/students/view-assignment': (BuildContext context) {},
+/* 
         '/teachers/classes': (BuildContext context) {},
         '/teachers/assignments': (BuildContext context) {},
         '/teachers/view-assignment': (BuildContext context) {}, */
