@@ -8,9 +8,9 @@ class Assignment extends StudiousObject {
   final ReviewConfigs reviewConfigs;
   final DateTime created;
   final DateTime deadline;
-  final List<MaterialItem> submittedFiles;
-  final bool handedIn;
-  final bool hasFeedback;
+  List<MaterialItem> submittedFiles;
+  bool handedIn;
+  bool hasFeedback;
 
   Assignment({
     required this.assignmentName,

@@ -1,6 +1,6 @@
 part of studious.views;
 
-class Student_Assignment_Viewer extends StatelessWidget {
+class Student_Assignment_Viewer extends StatefulWidget {
   final Assignment assignment;
 
   const Student_Assignment_Viewer({
@@ -9,15 +9,20 @@ class Student_Assignment_Viewer extends StatelessWidget {
   });
 
   @override
+  State<StatefulWidget> createState() => Student_Assignment_ViewerState();
+}
+
+class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer> {
+  @override
   Widget build(BuildContext context) {
     return ViewScaffold(
-      viewTitle: assignment.assignmentName,
+      viewTitle: widget.assignment.assignmentName,
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              assignment.description,
+              widget.assignment.description,
               style: const TextStyle(
                 color: StudiousTheme.purple,
                 fontSize: 16,
@@ -27,17 +32,17 @@ class Student_Assignment_Viewer extends StatelessWidget {
             Wrap(
               spacing: 10,
               runSpacing: 5,
-              children:
-                  List<Widget>.generate(assignment.materials.length, (index) {
+              children: List<Widget>.generate(
+                  widget.assignment.materials.length, (index) {
                 return Chip(
-                  avatar: assignment.materials[index].materialType.icon,
+                  avatar: widget.assignment.materials[index].materialType.icon,
                   side: const BorderSide(
                     width: 1,
                     color: StudiousTheme.darkPurple,
                   ),
                   backgroundColor: StudiousTheme.darkPurple.withOpacity(0.3),
                   label: Text(
-                    assignment.materials[index].fileName,
+                    widget.assignment.materials[index].fileName,
                     style: const TextStyle(
                       fontSize: 10,
                       color: StudiousTheme.darkPurple,
@@ -57,7 +62,7 @@ class Student_Assignment_Viewer extends StatelessWidget {
                     ),
                   ),
                   TextSpan(
-                    text: assignment.deadline.summary,
+                    text: widget.assignment.deadline.summary,
                     style: const TextStyle(
                       color: StudiousTheme.purple,
                       fontWeight: FontWeight.bold,
@@ -77,7 +82,7 @@ class Student_Assignment_Viewer extends StatelessWidget {
                     ),
                   ),
                   TextSpan(
-                    text: assignment.created.summary,
+                    text: widget.assignment.created.summary,
                     style: const TextStyle(
                       color: StudiousTheme.purple,
                       fontWeight: FontWeight.bold,
@@ -100,20 +105,26 @@ class Student_Assignment_Viewer extends StatelessWidget {
               label: 'Upload Files',
               iconData: Icons.add,
               action: () {},
-              enabled: !assignment.handedIn,
+              enabled: !widget.assignment.handedIn,
             ),
             const SizedBox(height: 10),
-            assignment.handedIn
+            widget.assignment.handedIn
                 ? IconTextButton(
                     label: 'Undo Hand In',
                     iconData: Icons.close,
-                    action: () {},
+                    action: () {
+                      widget.assignment.handedIn = false;
+                      setState(() {});
+                    },
                     enabled: true,
                   )
                 : IconTextButton(
                     label: 'Hand In',
                     iconData: Icons.check,
-                    action: () {},
+                    action: () {
+                      widget.assignment.handedIn = true;
+                      setState(() {});
+                    },
                     enabled: true,
                   ),
             const SizedBox(height: 10),
@@ -121,7 +132,7 @@ class Student_Assignment_Viewer extends StatelessWidget {
               label: 'View Feedback',
               iconData: Icons.comment,
               action: () {},
-              enabled: assignment.hasFeedback,
+              enabled: widget.assignment.hasFeedback,
             ),
             const SizedBox(height: 10),
           ],
