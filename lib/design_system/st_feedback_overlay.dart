@@ -27,11 +27,20 @@ mixin OverlayTools<T extends StatefulWidget> on State<T> {
 
 class StudentFeedbackOverlay extends OverlayEntry {
   final Function()? dismiss;
+  final FeedbackItem feedbackItem;
 
   StudentFeedbackOverlay({
+    required this.feedbackItem,
     this.dismiss,
   }) : super(
           builder: (BuildContext context) {
+            final List<Widget> commentItems = [];
+            for (CommentItem commentItem in feedbackItem.comments) {
+              commentItems.addAll([
+                StudentCommentCard(commentItem: commentItem),
+                const SizedBox(height: 10),
+              ]);
+            }
             return Align(
               alignment: AlignmentDirectional.bottomCenter,
               child: Container(
@@ -83,6 +92,14 @@ class StudentFeedbackOverlay extends OverlayEntry {
                                 ),
                               ),
                           ],
+                        ),
+                        const SizedBox(height: 30),
+                        Expanded(
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: commentItems,
+                            ),
+                          ),
                         ),
                       ],
                     ),

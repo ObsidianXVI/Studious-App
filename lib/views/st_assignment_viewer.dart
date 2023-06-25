@@ -126,7 +126,13 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer>
                     action: () {
                       widget.assignment.handedIn = true;
                       // dev only
-                      widget.assignment.feedbackItem = FeedbackItem();
+                      widget.assignment.feedbackItem = FeedbackItem(comments: [
+                        CommentItem(
+                          user: 'Small Sean',
+                          content: 'Very insightful insights!',
+                          upvotes: 2,
+                        ),
+                      ]);
                       setState(() {});
                     },
                     enabled: true,
@@ -138,6 +144,7 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer>
               action: () {
                 addOverlay(
                   overlay: StudentFeedbackOverlay(
+                    feedbackItem: widget.assignment.feedbackItem!,
                     dismiss: () => removeOverlay(),
                   ),
                 );

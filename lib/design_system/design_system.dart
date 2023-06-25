@@ -13,6 +13,7 @@ part './class_card.dart';
 part './assignment_card.dart';
 part './utils.dart';
 part './st_feedback_overlay.dart';
+part 'st_comment_card.dart';
 
 class StudiousTheme {
   static const Color lightPurple = Color(0xFF8b6eae);

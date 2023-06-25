@@ -7,5 +7,6 @@ part 'assignment.dart';
 part './material_item.dart';
 part './review_configs.dart';
 part 'feedback_item.dart';
+part './comment_item.dart';
 
 abstract class StudiousObject {}
