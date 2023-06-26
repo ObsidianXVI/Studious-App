@@ -19,9 +19,17 @@ class LaunchView extends StatelessWidget {
                   color: StudiousTheme.white,
                 ),
               ),
+              LoginView(),
               const SizedBox(height: 20),
               RectTextButton(
-                label: 'Student - Classes',
+                label: 'Student',
+                action: () {
+                  Navigator.pushNamed(context, NavRoutes.students_classes);
+                },
+              ),
+              const SizedBox(height: 20),
+              RectTextButton(
+                label: 'Teacher',
                 action: () {
                   Navigator.pushNamed(context, NavRoutes.students_classes);
                 },

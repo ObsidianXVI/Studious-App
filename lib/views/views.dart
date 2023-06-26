@@ -7,6 +7,10 @@ import '../core/studious_core.dart';
 import '../objects/objects.dart';
 
 part './launch_view.dart';
+part './login_view.dart';
 part './st_classes.dart';
 part './st_assignments.dart';
 part './st_assignment_viewer.dart';
+part './te_classes.dart';
+part './te_assignments.dart';
+part './te_assignment_viewer.dart';

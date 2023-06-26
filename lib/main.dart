@@ -26,6 +26,11 @@ class StudiousApp extends StatelessWidget {
         ),
       ),
       routes: {
+        core.NavRoutes.teachers_classes: (BuildContext context) {
+          return Material(
+            child: views.Teacher_Classes_View(),
+          );
+        },
         core.NavRoutes.students_classes: (BuildContext context) {
           return Material(
             child: views.Student_Classes_View(
@@ -34,7 +39,6 @@ class StudiousApp extends StatelessWidget {
           );
         },
 /* 
-        '/teachers/classes': (BuildContext context) {},
         '/teachers/assignments': (BuildContext context) {},
         '/teachers/view-assignment': (BuildContext context) {}, */
       },
