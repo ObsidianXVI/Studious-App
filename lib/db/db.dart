@@ -3,9 +3,9 @@ library studious.db;
 import 'package:flutter/material.dart';
 import 'package:studious/objects/objects.dart';
 
-class StudentDatabase {
-  static Map<String, StudentClass> classes = {
-    'music': StudentClass(
+class Database {
+  static Map<String, Class> classes = {
+    'music': Class(
       className: 'Class Name',
       memberCount: 24,
       teacherName: 'Mr Tarantino',

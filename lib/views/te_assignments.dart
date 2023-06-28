@@ -1,1 +1,0 @@
-part of studious.views;

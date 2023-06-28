@@ -26,15 +26,18 @@ class StudiousApp extends StatelessWidget {
         ),
       ),
       routes: {
-        core.NavRoutes.teachers_classes: (BuildContext context) {
+        core.NavRoutes.classes: (BuildContext context) {
           return Material(
-            child: views.Teacher_Classes_View(),
+            child: views.ClassesView(
+              classes: Database.classes.values.toList(),
+            ),
           );
         },
-        core.NavRoutes.students_classes: (BuildContext context) {
+        core.NavRoutes.assignments: (BuildContext context) {
           return Material(
-            child: views.Student_Classes_View(
-              classes: StudentDatabase.classes.values.toList(),
+            child: views.AssignmentsView(
+              assignments:
+                  Database.classes.values.expand((e) => e.assignments).toList(),
             ),
           );
         },

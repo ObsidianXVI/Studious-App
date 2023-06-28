@@ -1,13 +1,13 @@
 part of studious.objects;
 
-class StudentClass extends StudiousObject {
+class Class extends StudiousObject {
   final String className;
   final int memberCount;
   final String teacherName;
   final Color color;
   final List<Assignment> assignments;
 
-  StudentClass({
+  Class({
     required this.className,
     required this.memberCount,
     required this.teacherName,

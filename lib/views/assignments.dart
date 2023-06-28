@@ -1,9 +1,9 @@
 part of studious.views;
 
-class Student_Assignments_View extends StatelessWidget {
+class AssignmentsView extends StatelessWidget {
   final List<Assignment> assignments;
 
-  const Student_Assignments_View({
+  const AssignmentsView({
     required this.assignments,
   });
 

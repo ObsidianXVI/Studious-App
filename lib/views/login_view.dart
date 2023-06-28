@@ -83,9 +83,11 @@ class LoginView extends StatelessWidget {
                 action: () {
                   // dev purposes only
                   if (emailFieldController.value.text.contains('te')) {
-                    Navigator.of(context).pushNamed(NavRoutes.teachers_classes);
+                    SessionConfigs.studentMode = false;
+                    Navigator.of(context).pushNamed(NavRoutes.classes);
                   } else if (emailFieldController.value.text.contains('st')) {
-                    Navigator.of(context).pushNamed(NavRoutes.students_classes);
+                    SessionConfigs.studentMode = true;
+                    Navigator.of(context).pushNamed(NavRoutes.classes);
                   } else {
                     emailFieldController.clear();
                     passwordFieldController.clear();

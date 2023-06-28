@@ -24,14 +24,16 @@ class LaunchView extends StatelessWidget {
               RectTextButton(
                 label: 'Student',
                 action: () {
-                  Navigator.pushNamed(context, NavRoutes.students_classes);
+                  SessionConfigs.studentMode = true;
+                  Navigator.pushNamed(context, NavRoutes.classes);
                 },
               ),
               const SizedBox(height: 20),
               RectTextButton(
                 label: 'Teacher',
                 action: () {
-                  Navigator.pushNamed(context, NavRoutes.students_classes);
+                  SessionConfigs.studentMode = false;
+                  Navigator.pushNamed(context, NavRoutes.classes);
                 },
               ),
             ],

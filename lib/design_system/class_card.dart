@@ -1,7 +1,7 @@
 part of studious.ds;
 
 class ClassCard extends StatefulWidget {
-  final StudentClass studentClassData;
+  final Class studentClassData;
 
   const ClassCard({
     required this.studentClassData,
@@ -35,7 +35,7 @@ class ClassCardState extends State<ClassCard> {
               context,
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return Student_Assignments_View(
+                  return AssignmentsView(
                     assignments: widget.studentClassData.assignments,
                   );
                 },
