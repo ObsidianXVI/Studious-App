@@ -106,15 +106,17 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer>
               label: 'Upload Files',
               iconData: Icons.add,
               action: () {},
-              enabled: !widget.assignment.handedIn,
+              enabled: !(widget.assignment.assignmentStatus ==
+                  AssignmentStatus.submitted),
             ),
             const SizedBox(height: 10),
-            widget.assignment.handedIn
+            widget.assignment.assignmentStatus == AssignmentStatus.submitted
                 ? IconTextButton(
                     label: 'Undo Hand In',
                     iconData: Icons.close,
                     action: () {
-                      widget.assignment.handedIn = false;
+                      widget.assignment.assignmentStatus =
+                          AssignmentStatus.attempted;
                       widget.assignment.feedbackItem = null;
                       setState(() {});
                     },
@@ -124,7 +126,8 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer>
                     label: 'Hand In',
                     iconData: Icons.check,
                     action: () {
-                      widget.assignment.handedIn = true;
+                      widget.assignment.assignmentStatus =
+                          AssignmentStatus.submitted;
                       // dev only
                       widget.assignment.feedbackItem = FeedbackItem(comments: [
                         CommentItem(

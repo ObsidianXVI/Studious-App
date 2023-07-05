@@ -12,6 +12,7 @@ class Database {
       color: Colors.amber,
       assignments: [
         Assignment(
+          className: 'Clas name',
           assignmentName: 'Intro to Hip-Hop',
           description:
               'This assignment introduces you to the world of hip-hop. Listen to the track attached and write down the themes discussed.',
@@ -31,7 +32,7 @@ class Database {
             allowAnonReviewing: false,
           ),
           submittedFiles: [],
-          handedIn: false,
+          assignmentStatus: AssignmentStatus.unread,
           feedbackItem: null,
         ),
       ],

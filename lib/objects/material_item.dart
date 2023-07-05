@@ -14,7 +14,7 @@ enum MaterialItemType {
   const MaterialItemType(this.ext, this.icon);
 }
 
-class MaterialItem {
+class MaterialItem extends StudiousObject {
   final String fileName;
   final MaterialItemType materialType;
 

@@ -8,5 +8,8 @@ part './material_item.dart';
 part './review_configs.dart';
 part 'feedback_item.dart';
 part './comment_item.dart';
+part './person.dart';
 
-abstract class StudiousObject {}
+abstract class StudiousObject {
+  const StudiousObject();
+}

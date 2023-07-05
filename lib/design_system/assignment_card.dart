@@ -35,9 +35,16 @@ class AssignmentCardState extends State<AssignmentCard> {
               context,
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return Student_Assignment_Viewer(
-                    assignment: widget.assignmentData,
-                  );
+                  if (SessionConfigs.studentMode) {
+                    return Student_Assignment_Viewer(
+                      assignment: widget.assignmentData,
+                    );
+                  } else {
+                    return Teacher_Assignment_Viewer(
+                      assignment: widget.assignmentData,
+                      className: widget.assignmentData.className,
+                    );
+                  }
                 },
               ),
             );
@@ -120,6 +127,19 @@ class AssignmentCardState extends State<AssignmentCard> {
                           ),
                         );
                       }),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: Text(
+                      widget.assignmentData.assignmentStatus.label,
+                      style: TextStyle(
+                        color: semanticColorBasedOnDeadline(
+                          widget.assignmentData.deadline,
+                        ),
+                        fontSize: 12,
+                      ),
                     ),
                   ),
                 ],

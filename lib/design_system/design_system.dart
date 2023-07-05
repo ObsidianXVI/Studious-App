@@ -2,6 +2,7 @@ library studious.ds;
 
 import 'package:flutter/material.dart';
 import 'package:studious/objects/objects.dart';
+import 'package:studious/core/studious_core.dart';
 import 'package:studious/utils/utils.dart';
 import 'package:studious/views/views.dart';
 
@@ -15,6 +16,8 @@ part './utils.dart';
 part './st_feedback_overlay.dart';
 part './card_shelf.dart';
 part 'st_comment_card.dart';
+part './shelf_gallery.dart';
+part './status_card.dart';
 
 class StudiousTheme {
   static const Color lightPurple = Color(0xFF8b6eae);

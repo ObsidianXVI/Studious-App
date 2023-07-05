@@ -7,7 +7,7 @@ class Class extends StudiousObject {
   final Color color;
   final List<Assignment> assignments;
 
-  Class({
+  const Class({
     required this.className,
     required this.memberCount,
     required this.teacherName,

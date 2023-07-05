@@ -1,6 +1,6 @@
 part of studious.objects;
 
-class ReviewConfigs {
+class ReviewConfigs extends StudiousObject {
   final ReviewTemplate? reviewTemplate;
   final bool allowAnonReviewing;
 
@@ -10,4 +10,4 @@ class ReviewConfigs {
   });
 }
 
-class ReviewTemplate {}
+class ReviewTemplate extends StudiousObject {}

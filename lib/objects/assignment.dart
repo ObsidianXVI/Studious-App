@@ -1,5 +1,16 @@
 part of studious.objects;
 
+enum AssignmentStatus {
+  unread('Unread'),
+  inProgress('In Progress'),
+  attempted('Attempted'),
+  submitted("Submitted"),
+  overdue('Overdue');
+
+  final String label;
+  const AssignmentStatus(this.label);
+}
+
 class Assignment extends StudiousObject {
   final String assignmentName;
   final String description;
@@ -8,20 +19,22 @@ class Assignment extends StudiousObject {
   final ReviewConfigs reviewConfigs;
   final DateTime created;
   final DateTime deadline;
+  final String className;
+  AssignmentStatus assignmentStatus;
   FeedbackItem? feedbackItem;
   List<MaterialItem> submittedFiles;
-  bool handedIn;
 
   Assignment({
     required this.assignmentName,
     required this.description,
     required this.materials,
+    required this.className,
     required this.reviewConfigs,
     required this.allowedFileTypes,
     required this.created,
     required this.deadline,
     required this.submittedFiles,
-    required this.handedIn,
     required this.feedbackItem,
+    required this.assignmentStatus,
   });
 }
