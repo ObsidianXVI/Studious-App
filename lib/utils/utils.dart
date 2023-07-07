@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+final GlobalKey<ScaffoldMessengerState> snackbarKey =
+    GlobalKey<ScaffoldMessengerState>();
+
 double screenHeight(BuildContext context) {
   final padding = MediaQuery.of(context).viewPadding;
   final height = MediaQuery.of(context).size.height;

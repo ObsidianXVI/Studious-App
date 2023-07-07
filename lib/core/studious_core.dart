@@ -13,4 +13,5 @@ class NavRoutes {
 
 class SessionConfigs {
   static bool studentMode = true;
+  static dynamic tempStore;
 }

@@ -1,6 +1,6 @@
 part of studious.views;
 
-class Teacher_Assignment_Viewer extends StatefulWidget {
+class Teacher_Assignment_Viewer extends StatelessWidget {
   final Assignment assignment;
   final String className;
 
@@ -11,14 +11,9 @@ class Teacher_Assignment_Viewer extends StatefulWidget {
   });
 
   @override
-  State<StatefulWidget> createState() => Teacher_Assignment_ViewerState();
-}
-
-class Teacher_Assignment_ViewerState extends State<Teacher_Assignment_Viewer> {
-  @override
   Widget build(BuildContext context) {
     return ViewScaffold(
-      viewTitle: widget.assignment.assignmentName,
+      viewTitle: assignment.assignmentName,
       child: ShelfGallery(
         height: screenHeight(context) - 160,
         width: screenWidth(context) + 60,
@@ -30,7 +25,7 @@ class Teacher_Assignment_ViewerState extends State<Teacher_Assignment_Viewer> {
               14,
               (index) => StatusCard(
                 color: Colors.grey,
-                assignmentData: widget.assignment,
+                assignmentData: assignment,
                 person: const Person(
                   name: 'Joanne Lim',
                   formClass: '5.13',
@@ -47,7 +42,7 @@ class Teacher_Assignment_ViewerState extends State<Teacher_Assignment_Viewer> {
               14,
               (index) => StatusCard(
                 color: Colors.lightBlue,
-                assignmentData: widget.assignment,
+                assignmentData: assignment,
                 person: const Person(
                   name: 'Joanne Lim',
                   formClass: '5.13',
@@ -64,7 +59,7 @@ class Teacher_Assignment_ViewerState extends State<Teacher_Assignment_Viewer> {
               14,
               (index) => StatusCard(
                 color: Colors.purple,
-                assignmentData: widget.assignment,
+                assignmentData: assignment,
                 person: const Person(
                   name: 'Joanne Lim',
                   formClass: '5.13',
@@ -81,7 +76,7 @@ class Teacher_Assignment_ViewerState extends State<Teacher_Assignment_Viewer> {
               14,
               (index) => StatusCard(
                 color: Colors.green,
-                assignmentData: widget.assignment,
+                assignmentData: assignment,
                 person: const Person(
                   name: 'Joanne Lim',
                   formClass: '5.13',
@@ -98,7 +93,7 @@ class Teacher_Assignment_ViewerState extends State<Teacher_Assignment_Viewer> {
               14,
               (index) => StatusCard(
                 color: Colors.red,
-                assignmentData: widget.assignment,
+                assignmentData: assignment,
                 person: const Person(
                   name: 'Joanne Lim',
                   formClass: '5.13',

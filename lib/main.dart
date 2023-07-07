@@ -4,6 +4,7 @@ import 'package:studious/design_system/design_system.dart';
 import 'package:studious/objects/objects.dart';
 import './views/views.dart' as views;
 import './core/studious_core.dart' as core;
+import './utils/utils.dart' as utils;
 
 void main() {
   runApp(const StudiousApp());
@@ -16,6 +17,7 @@ class StudiousApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      scaffoldMessengerKey: utils.snackbarKey,
       theme: ThemeData(
         fontFamily: 'Rubik',
         inputDecorationTheme: const InputDecorationTheme(
@@ -26,11 +28,10 @@ class StudiousApp extends StatelessWidget {
           size: 20,
         ),
       ),
-      initialRoute: '/test',
+      initialRoute: core.NavRoutes.classes,
       routes: {
         '/test': (BuildContext context) {
-          return views.Teacher_Assignment_Viewer(
-            className: 'CLass x',
+          return views.Teacher_Assignment_Editor_View(
             assignment: Assignment(
               assignmentName: 'assignmentName',
               description: 'description',
@@ -51,8 +52,10 @@ class StudiousApp extends StatelessWidget {
         },
         core.NavRoutes.classes: (BuildContext context) {
           return Material(
-            child: views.ClassesView(
-              classes: Database.classes.values.toList(),
+            child: SelectionArea(
+              child: views.ClassesView(
+                classes: Database.classes.values.toList(),
+              ),
             ),
           );
         },
@@ -76,3 +79,27 @@ class StudiousApp extends StatelessWidget {
     );
   }
 }
+
+/**
+ * SelectionArea(
+            child: views.Teacher_Assignment_Viewer(
+              className: 'CLass x',
+              assignment: Assignment(
+                assignmentName: 'assignmentName',
+                description: 'description',
+                materials: [],
+                reviewConfigs: const ReviewConfigs(
+                  reviewTemplate: null,
+                  allowAnonReviewing: false,
+                ),
+                allowedFileTypes: [],
+                created: DateTime.now(),
+                deadline: DateTime.now().add(const Duration(days: 3)),
+                submittedFiles: [],
+                feedbackItem: null,
+                assignmentStatus: AssignmentStatus.attempted,
+                className: 'Munsic',
+              ),
+            ),
+          )
+ */

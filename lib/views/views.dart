@@ -12,3 +12,4 @@ part 'classes.dart';
 part 'assignments.dart';
 part './st_assignment_viewer.dart';
 part './te_assignment_viewer.dart';
+part './te_assignment_editor.dart';

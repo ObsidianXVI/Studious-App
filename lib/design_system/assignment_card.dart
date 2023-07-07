@@ -132,15 +132,45 @@ class AssignmentCardState extends State<AssignmentCard> {
                   Positioned(
                     bottom: 0,
                     right: 0,
-                    child: Text(
-                      widget.assignmentData.assignmentStatus.label,
-                      style: TextStyle(
-                        color: semanticColorBasedOnDeadline(
-                          widget.assignmentData.deadline,
-                        ),
-                        fontSize: 12,
-                      ),
-                    ),
+                    child: SessionConfigs.studentMode
+                        ? Text(
+                            widget.assignmentData.assignmentStatus.label,
+                            style: TextStyle(
+                              color: semanticColorBasedOnDeadline(
+                                widget.assignmentData.deadline,
+                              ),
+                              fontSize: 12,
+                            ),
+                          )
+                        : TextButton(
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) {
+                                  return Teacher_Assignment_Editor_View(
+                                    assignment: widget.assignmentData,
+                                  );
+                                }),
+                              );
+                            },
+                            child: const Row(
+                              children: [
+                                Icon(
+                                  Icons.edit,
+                                  size: 14,
+                                  color: StudiousTheme.darkPurple,
+                                ),
+                                SizedBox(width: 3),
+                                Text(
+                                  'Edit',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: StudiousTheme.darkPurple,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                   ),
                 ],
               ),

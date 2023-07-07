@@ -13,8 +13,15 @@ class ViewScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Material(
-        child: Container(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            viewTitle,
+          ),
+          backgroundColor: StudiousTheme.darkPurple,
+          shadowColor: Colors.transparent,
+        ),
+        body: Container(
           width: double.infinity,
           height: double.infinity,
           color: StudiousTheme.white,
@@ -23,7 +30,7 @@ class ViewScaffold extends StatelessWidget {
               padding: const EdgeInsets.only(
                 left: 40,
                 right: 40,
-                top: 40,
+                top: 10,
                 bottom: 40,
               ),
               child: Column(
@@ -31,13 +38,13 @@ class ViewScaffold extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  Text(
+/*                   Text(
                     viewTitle,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     softWrap: false,
                     style: StudiousFont.viewTitle(),
-                  ),
+                  ), */
 /*                 const Divider(
                   height: 20,
                   color: StudiousTheme.purple,
