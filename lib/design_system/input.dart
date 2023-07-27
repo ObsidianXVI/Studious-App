@@ -1,6 +1,13 @@
 part of studious.ds;
 
 class SearchBox extends StatelessWidget {
+  final void Function(String) onChangedCallback;
+
+  const SearchBox({
+    required this.onChangedCallback,
+    super.key,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -19,6 +26,7 @@ class SearchBox extends StatelessWidget {
             Expanded(
               child: TextField(
                 style: StudiousFont.body(),
+                onChanged: onChangedCallback,
               ),
             ),
             const Spacer(),

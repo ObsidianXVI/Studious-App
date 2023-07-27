@@ -126,7 +126,11 @@ class StudentFeedbackOverlayState extends State<StudentFeedbackOverlay> {
                   Column(
                     children: [
                       activeComment!,
-
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: activeComment!.commentItem.reference,
+                        ),
+                      ),
                       /// Content of highlighted material
                       // Expanded(child: SingleChildScrollView(child: ,)),
                     ],

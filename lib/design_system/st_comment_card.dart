@@ -109,6 +109,82 @@ class StudentCommentCardState extends State<StudentCommentCard> {
                     ],
                   ),
                 ),
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        splashRadius: 20,
+                        onPressed: () {
+                          if (widget.commentItem.commentStatus ==
+                              CommentStatus.defaultStatus) {
+                            widget.commentItem.commentStatus =
+                                CommentStatus.flagged;
+                          } else {
+                            widget.commentItem.commentStatus =
+                                CommentStatus.defaultStatus;
+                          }
+                          setState(() {});
+                        },
+                        icon: Icon(
+                          Icons.flag,
+                          size: 18,
+                          color: widget.commentItem.commentStatus ==
+                                  CommentStatus.flagged
+                              ? Colors.red
+                              : Colors.grey,
+                        ),
+                      ),
+                      Text(
+                        widget.commentItem.commentStatus ==
+                                CommentStatus.flagged
+                            ? 'Flagged'
+                            : 'Flag',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: StudiousTheme.purple,
+                        ),
+                      ),
+                      const SizedBox(width: 20),
+                      IconButton(
+                        splashRadius: 20,
+                        onPressed: () {
+                          if (widget.commentItem.commentStatus ==
+                              CommentStatus.resolved) {
+                            widget.commentItem.commentStatus =
+                                CommentStatus.defaultStatus;
+                          } else {
+                            widget.commentItem.commentStatus =
+                                CommentStatus.resolved;
+                          }
+                          setState(() {});
+                        },
+                        icon: Icon(
+                          Icons.check,
+                          size: 18,
+                          color: widget.commentItem.commentStatus ==
+                                  CommentStatus.resolved
+                              ? Colors.green
+                              : Colors.grey,
+                        ),
+                      ),
+                      Text(
+                        widget.commentItem.commentStatus ==
+                                CommentStatus.resolved
+                            ? 'Resolved'
+                            : 'Resolve',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: StudiousTheme.purple,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
