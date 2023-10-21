@@ -12,6 +12,24 @@ enum MaterialItemType {
   final Icon icon;
 
   const MaterialItemType(this.ext, this.icon);
+
+  static MaterialItemType fromString(String name) {
+    switch (name) {
+      case 'pdf':
+        return MaterialItemType.pdf;
+      case 'png':
+        return MaterialItemType.image;
+      case 'mp4':
+        return MaterialItemType.video;
+      case 'xlsx':
+        return MaterialItemType.excel;
+      case 'mp3':
+        return MaterialItemType.audio;
+      case 'docx':
+        return MaterialItemType.docx;
+    }
+    throw 'No such material type $name found';
+  }
 }
 
 class MaterialItem extends StudiousObject {
@@ -22,4 +40,14 @@ class MaterialItem extends StudiousObject {
     required this.fileName,
     required this.materialType,
   });
+
+  MaterialItem.fromJson(Map<String, Object?> json)
+      : fileName = json['fileName'] as String,
+        materialType =
+            MaterialItemType.fromString(json['materialType'] as String);
+
+  Map<String, Object?> toJson() => {
+        'fileName': fileName,
+        'materialType': materialType.ext,
+      };
 }

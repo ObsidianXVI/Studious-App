@@ -6,4 +6,15 @@ class FeedbackItem extends StudiousObject {
   FeedbackItem({
     required this.comments,
   });
+
+  FeedbackItem.fromJson(Map<String, Object?> json)
+      : comments = [
+          for (final cmItem
+              in (json['comments'] as List).cast<Map<String, Object?>>())
+            CommentItem.fromJson(cmItem),
+        ];
+
+  Map<String, Object?> toJson() => {
+        'comments': [for (final cmt in comments) cmt.toJson()]
+      };
 }
