@@ -30,13 +30,15 @@ class ClassCardState extends State<ClassCard> {
         elevation: elevation,
         borderRadius: BorderRadius.circular(5),
         child: GestureDetector(
-          onTap: () {
+          onTap: () async {
+            final List<Assignment> assignments = await Database.getAssignments(
+                widget.studentClassData.assignments);
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (BuildContext context) {
                   return AssignmentsView(
-                    assignments: widget.studentClassData.assignments,
+                    assignments: assignments,
                   );
                 },
               ),

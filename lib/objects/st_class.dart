@@ -5,7 +5,7 @@ class Class extends StudiousObject {
   final int memberCount;
   final String teacherName;
   final Color color;
-  final List<Assignment> assignments;
+  final List<String> assignments;
 
   const Class({
     required this.className,
@@ -20,17 +20,13 @@ class Class extends StudiousObject {
         memberCount = json['memberCount'] as int,
         teacherName = json['teacherName'] as String,
         color = Color(int.parse(json['color'] as String)),
-        assignments = [
-          for (final asmt
-              in (json['assignments'] as List).cast<Map<String, Object?>>())
-            Assignment.fromJson(asmt)
-        ];
+        assignments = (json['assignments'] as List).cast<String>();
 
   Map<String, Object?> toJson() => {
         'className': className,
         'memberCount': memberCount,
         'teacherName': teacherName,
         'color': color.value,
-        'assignments': [for (final asmt in assignments) asmt.toJson()],
+        'assignments': assignments,
       };
 }

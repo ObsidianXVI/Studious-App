@@ -5,6 +5,7 @@ class AssignmentsView extends StatefulWidget {
 
   const AssignmentsView({
     required this.assignments,
+    super.key,
   });
 
   @override
@@ -29,17 +30,22 @@ class AssignmentsViewState extends State<AssignmentsView> {
         const SizedBox(height: 10),
       ]);
     }
-    return CardShelf(
-      shelfName: 'Assignments',
-      children: assignmentCards,
-      onChangedCallback: (String value) {
-        setState(() {
-          filteredAssignments
-            ..clear()
-            ..addAll(widget.assignments.where((Assignment a) =>
-                a.assignmentName.toLowerCase().contains(value.toLowerCase())));
-        });
-      },
+
+    return Material(
+      child: CardShelf(
+        shelfName: 'Assignments',
+        children: assignmentCards,
+        onChangedCallback: (String value) {
+          setState(() {
+            filteredAssignments
+              ..clear()
+              ..addAll(widget.assignments.where((Assignment a) => a
+                  .assignmentName
+                  .toLowerCase()
+                  .contains(value.toLowerCase())));
+          });
+        },
+      ),
     );
   }
 }

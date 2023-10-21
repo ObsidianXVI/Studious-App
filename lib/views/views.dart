@@ -1,6 +1,7 @@
 library studious.views;
 
 import 'package:flutter/material.dart';
+import 'package:studious/db/db.dart';
 import 'package:studious/utils/utils.dart';
 import '../design_system/design_system.dart';
 import '../core/studious_core.dart';

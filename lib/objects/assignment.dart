@@ -38,7 +38,6 @@ class Assignment extends StudiousObject {
   final String className;
   AssignmentStatus assignmentStatus;
   FeedbackItem? feedbackItem;
-  List<MaterialItem> submittedFiles;
 
   Assignment({
     required this.assignmentName,
@@ -49,7 +48,6 @@ class Assignment extends StudiousObject {
     required this.allowedFileTypes,
     required this.created,
     required this.deadline,
-    required this.submittedFiles,
     required this.feedbackItem,
     required this.assignmentStatus,
   });
@@ -66,7 +64,8 @@ class Assignment extends StudiousObject {
           for (final mat in (json['allowedFileTypes'] as List).cast<String>())
             MaterialItemType.fromString(mat)
         ],
-        reviewConfigs = ReviewConfigs.fromJson(json),
+        reviewConfigs = ReviewConfigs.fromJson(
+            json['reviewConfigs'] as Map<String, Object?>),
         created = DateTime.parse(json['created'] as String),
         deadline = DateTime.parse(json['deadline'] as String),
         className = json['className']! as String,
@@ -75,12 +74,7 @@ class Assignment extends StudiousObject {
         feedbackItem = json.containsKey('feedbackItem')
             ? FeedbackItem.fromJson(
                 json['feedbackItem'] as Map<String, Object?>)
-            : null,
-        submittedFiles = [
-          for (final fil
-              in (json['submittedFiles'] as List).cast<Map<String, Object?>>())
-            MaterialItem.fromJson(fil),
-        ];
+            : null;
 
   Map<String, Object?> toJson() => {
         'assignmentName': assignmentName,
@@ -93,6 +87,5 @@ class Assignment extends StudiousObject {
         'className': className,
         'assignmentStatus': assignmentStatus.label,
         'feedbackItem': feedbackItem?.toJson(),
-        'submittedFiles': [for (final fil in submittedFiles) fil.toJson()]
       };
 }

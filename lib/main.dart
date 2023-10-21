@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:studious/db/db.dart';
 import 'package:studious/db/db_configs.dart';
 import 'package:studious/design_system/design_system.dart';
-import 'package:studious/objects/objects.dart';
 import './views/views.dart' as views;
 import './core/studious_core.dart' as core;
 import './utils/utils.dart' as utils;
@@ -38,26 +37,6 @@ class StudiousAppState extends State<StudiousApp> {
       ),
       initialRoute: core.NavRoutes.classes,
       routes: {
-        '/test': (BuildContext context) {
-          return views.Teacher_Assignment_Editor_View(
-            assignment: Assignment(
-              assignmentName: 'assignmentName',
-              description: 'description',
-              materials: [],
-              reviewConfigs: const ReviewConfigs(
-                reviewTemplate: null,
-                allowAnonReviewing: false,
-              ),
-              allowedFileTypes: [],
-              created: DateTime.now(),
-              deadline: DateTime.now().add(const Duration(days: 3)),
-              submittedFiles: [],
-              feedbackItem: null,
-              assignmentStatus: AssignmentStatus.attempted,
-              className: 'Munsic',
-            ),
-          );
-        },
         core.NavRoutes.classes: (BuildContext context) {
           return Material(
             child: SelectionArea(
@@ -73,14 +52,6 @@ class StudiousAppState extends State<StudiousApp> {
                   }
                 },
               ),
-            ),
-          );
-        },
-        core.NavRoutes.assignments: (BuildContext context) {
-          return Material(
-            child: views.AssignmentsView(
-              assignments: [],
-              // Database.classes.values.expand((e) => e.assignments).toList(),
             ),
           );
         },
@@ -117,4 +88,16 @@ class StudiousAppState extends State<StudiousApp> {
               ),
             ),
           )
+ */
+
+/**
+ * FutureBuilder(future: Database.assignmentsColl, builder: (context, snapshot) {
+            if (snapshot.hasData && snapshot.data!=null) {
+              return views.Teacher_Assignment_Editor_View(
+            assignment: snapshot.data!,
+          );
+            } else {
+              return Container();
+            }
+          })
  */
