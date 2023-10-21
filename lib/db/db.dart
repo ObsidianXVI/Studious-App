@@ -1,73 +1,19 @@
 library studious.db;
 
-import 'package:flutter/material.dart';
-import 'package:studious/objects/objects.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+
+final db = FirebaseFirestore.instance
+  ..useFirestoreEmulator(
+    '127.0.0.1',
+    8080,
+  );
 
 class Database {
-  static Map<String, Class> classes = {
-    'music': Class(
-      className: 'Class Name',
-      memberCount: 24,
-      teacherName: 'Mr Tarantino',
-      color: Colors.amber,
-      assignments: [
-        Assignment(
-          className: 'Clas name',
-          assignmentName: 'Intro to Hip-Hop',
-          description:
-              'This assignment introduces you to the world of hip-hop. Listen to the track attached and write down the themes discussed.',
-          materials: const [
-            MaterialItem(
-              fileName: 'Soul Food III',
-              materialType: MaterialItemType.audio,
-            ),
-          ],
-          created: DateTime.now(),
-          deadline: DateTime.now().add(const Duration(days: 7)),
-          allowedFileTypes: [
-            MaterialItemType.pdf,
-          ],
-          reviewConfigs: const ReviewConfigs(
-            reviewTemplate: null,
-            allowAnonReviewing: false,
-          ),
-          submittedFiles: [],
-          assignmentStatus: AssignmentStatus.unread,
-          feedbackItem: null,
-        ),
-      ],
-    ),
-    'm2': Class(
-      className: 'Class 2',
-      memberCount: 24,
-      teacherName: 'Mr Tarantino',
-      color: Colors.amber,
-      assignments: [
-        Assignment(
-          className: 'Clas name',
-          assignmentName: 'Intro to Hip-Hop',
-          description:
-              'This assignment introduces you to the world of hip-hop. Listen to the track attached and write down the themes discussed.',
-          materials: const [
-            MaterialItem(
-              fileName: 'Soul Food III',
-              materialType: MaterialItemType.audio,
-            ),
-          ],
-          created: DateTime.now(),
-          deadline: DateTime.now().add(const Duration(days: 7)),
-          allowedFileTypes: [
-            MaterialItemType.pdf,
-          ],
-          reviewConfigs: const ReviewConfigs(
-            reviewTemplate: null,
-            allowAnonReviewing: false,
-          ),
-          submittedFiles: [],
-          assignmentStatus: AssignmentStatus.unread,
-          feedbackItem: null,
-        ),
-      ],
-    ),
-  };
+  static Future<void> init(FirebaseOptions webOptions) async {
+    await Firebase.initializeApp(
+      options: webOptions,
+    );
+    await db.enablePersistence();
+  }
 }

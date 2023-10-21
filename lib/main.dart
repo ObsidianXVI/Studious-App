@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:studious/db/db.dart';
+import 'package:studious/db/db_configs.dart';
 import 'package:studious/design_system/design_system.dart';
 import 'package:studious/objects/objects.dart';
 import './views/views.dart' as views;
 import './core/studious_core.dart' as core;
 import './utils/utils.dart' as utils;
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Database.init(webOptions);
   runApp(const StudiousApp());
 }
 
