@@ -13,9 +13,14 @@ void main() async {
   runApp(const StudiousApp());
 }
 
-class StudiousApp extends StatelessWidget {
+class StudiousApp extends StatefulWidget {
   const StudiousApp({super.key});
 
+  @override
+  State<StatefulWidget> createState() => StudiousAppState();
+}
+
+class StudiousAppState extends State<StudiousApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -56,8 +61,17 @@ class StudiousApp extends StatelessWidget {
         core.NavRoutes.classes: (BuildContext context) {
           return Material(
             child: SelectionArea(
-              child: views.ClassesView(
-                classes: Database.classes.values.toList(),
+              child: FutureBuilder(
+                future: Database.getClasess(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData && snapshot.data != null) {
+                    return views.ClassesView(
+                      classes: snapshot.data!,
+                    );
+                  } else {
+                    return Container();
+                  }
+                },
               ),
             ),
           );
@@ -65,8 +79,8 @@ class StudiousApp extends StatelessWidget {
         core.NavRoutes.assignments: (BuildContext context) {
           return Material(
             child: views.AssignmentsView(
-              assignments:
-                  Database.classes.values.expand((e) => e.assignments).toList(),
+              assignments: [],
+              // Database.classes.values.expand((e) => e.assignments).toList(),
             ),
           );
         },
@@ -74,10 +88,8 @@ class StudiousApp extends StatelessWidget {
         '/teachers/assignments': (BuildContext context) {},
         '/teachers/view-assignment': (BuildContext context) {}, */
       },
-      home: Material(
-        child: views.LaunchView(
-          key: key,
-        ),
+      home: const Material(
+        child: views.LaunchView(),
       ),
     );
   }

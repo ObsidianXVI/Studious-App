@@ -26,7 +26,6 @@ class Database {
 
   static Future<List<Class>> getClasess() async {
     final QuerySnapshot<Class> snapshot = await classesColl.get();
-    print(snapshot.docs);
     return [for (final doc in snapshot.docs) doc.data()];
   }
 }
