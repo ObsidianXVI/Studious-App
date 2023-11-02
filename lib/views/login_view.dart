@@ -111,7 +111,7 @@ class LoginView extends StatelessWidget {
                       );
                     }
                   } else {
-                    student = queryResults.docs.first;
+                    studentId = queryResults.docs.first.id;
                     if (context.mounted) {
                       Navigator.of(context).pushNamed(RouteNames.classes);
                     }

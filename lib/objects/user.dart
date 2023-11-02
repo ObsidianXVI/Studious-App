@@ -51,4 +51,13 @@ class Student extends User {
         'formClass': formClass,
         'submissions': submissions,
       };
+
+  AssignmentStatus statusForAssignment(
+      DocumentSnapshot<Assignment> assignment) {
+    if (submissions.containsKey(assignment.id)) {
+      return AssignmentStatus.submitted;
+    } else {
+      return AssignmentStatus.unread;
+    }
+  }
 }

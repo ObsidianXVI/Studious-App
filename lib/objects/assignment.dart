@@ -35,7 +35,6 @@ class Assignment extends StudiousObject {
   ReviewConfigs reviewConfigs;
   DateTime created;
   DateTime deadline;
-  AssignmentStatus assignmentStatus;
   List<CommentItem> comments;
 
   Assignment({
@@ -47,7 +46,6 @@ class Assignment extends StudiousObject {
     required this.created,
     required this.deadline,
     required this.comments,
-    required this.assignmentStatus,
   });
 
   Assignment.fromJson(Map<String, Object?> json)
@@ -66,8 +64,6 @@ class Assignment extends StudiousObject {
             json['reviewConfigs'] as Map<String, Object?>),
         created = DateTime.parse(json['created'] as String),
         deadline = DateTime.parse(json['deadline'] as String),
-        assignmentStatus =
-            AssignmentStatus.fromString(json['assignmentStatus'] as String),
         comments = [
           for (final cm
               in (json['comments'] as List).cast<Map<String, Object?>>())
@@ -83,7 +79,6 @@ class Assignment extends StudiousObject {
         'reviewConfigs': reviewConfigs.toJson(),
         'created': created.toIso8601String(),
         'deadline': deadline.toIso8601String(),
-        'assignmentStatus': assignmentStatus.label,
         'comments': [for (final cm in comments) cm.toJson()],
       };
 }

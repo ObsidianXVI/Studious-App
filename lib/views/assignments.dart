@@ -26,11 +26,10 @@ class AssignmentsViewState extends State<AssignmentsView> {
     final List<Widget> assignmentCards = [];
     for (DocumentSnapshot<Assignment> assignment in filteredAssignments) {
       assignmentCards.addAll([
-        AssignmentCard(assignmentData: assignment),
+        AssignmentCard(assignmentData: assignment, studentId: studentId!),
         const SizedBox(height: 10),
       ]);
     }
-
     return Material(
       child: CardShelf(
         shelfName: 'Assignments',
@@ -45,7 +44,6 @@ class AssignmentsViewState extends State<AssignmentsView> {
                       .assignmentName
                       .toLowerCase()
                       .contains(value.toLowerCase()))) */
-            ;
           });
         },
       ),

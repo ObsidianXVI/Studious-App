@@ -7,7 +7,7 @@ import 'package:studious/objects/objects.dart';
 import './views/views.dart' as views;
 import './utils/utils.dart' as utils;
 
-DocumentSnapshot<Student>? student;
+String? studentId;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Database.init(webOptions);
@@ -45,7 +45,7 @@ class StudiousAppState extends State<StudiousApp> {
         RouteNames.classes: (_) => Material(
               child: SelectionArea(
                 child: FutureBuilder(
-                  future: Database.getClasess(student!.data()!.enrolledClasses),
+                  future: getClasses(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData && snapshot.data != null) {
                       return views.ClassesView(
@@ -60,6 +60,11 @@ class StudiousAppState extends State<StudiousApp> {
             ),
       },
     );
+  }
+
+  Future<List<DocumentSnapshot<Class>>> getClasses() async {
+    return Database.getClasess(
+        (await Database.getStudent(studentId!)).data()!.enrolledClasses);
   }
 }
 
