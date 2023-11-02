@@ -1,7 +1,7 @@
 part of studious.views;
 
 class Student_Assignment_Viewer extends StatefulWidget {
-  final Assignment assignment;
+  final DocumentSnapshot<Assignment> assignment;
 
   const Student_Assignment_Viewer({
     required this.assignment,
@@ -17,13 +17,13 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer>
   @override
   Widget build(BuildContext context) {
     return ViewScaffold(
-      viewTitle: widget.assignment.assignmentName,
+      viewTitle: widget.assignment.data()!.assignmentName,
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              widget.assignment.description,
+              widget.assignment.data()!.description,
               style: const TextStyle(
                 color: StudiousTheme.purple,
                 fontSize: 16,
@@ -34,16 +34,20 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer>
               spacing: 10,
               runSpacing: 5,
               children: List<Widget>.generate(
-                  widget.assignment.materials.length, (index) {
+                  widget.assignment.data()!.materials.length, (index) {
                 return Chip(
-                  avatar: widget.assignment.materials[index].materialType.icon,
+                  avatar: widget.assignment
+                      .data()!
+                      .materials[index]
+                      .materialType
+                      .icon,
                   side: const BorderSide(
                     width: 1,
                     color: StudiousTheme.darkPurple,
                   ),
                   backgroundColor: StudiousTheme.darkPurple.withOpacity(0.3),
                   label: Text(
-                    widget.assignment.materials[index].fileName,
+                    widget.assignment.data()!.materials[index].fileName,
                     style: const TextStyle(
                       fontSize: 10,
                       color: StudiousTheme.darkPurple,
@@ -63,7 +67,7 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer>
                     ),
                   ),
                   TextSpan(
-                    text: widget.assignment.deadline.summary,
+                    text: widget.assignment.data()!.deadline.summary,
                     style: const TextStyle(
                       color: StudiousTheme.purple,
                       fontWeight: FontWeight.bold,
@@ -83,7 +87,7 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer>
                     ),
                   ),
                   TextSpan(
-                    text: widget.assignment.created.summary,
+                    text: widget.assignment.data()!.created.summary,
                     style: const TextStyle(
                       color: StudiousTheme.purple,
                       fontWeight: FontWeight.bold,
@@ -102,22 +106,45 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer>
               ),
             ),
             const SizedBox(height: 20),
-            IconTextButton(
-              label: 'Upload Files',
-              iconData: Icons.add,
-              action: () {},
-              enabled: !(widget.assignment.assignmentStatus ==
-                  AssignmentStatus.submitted),
-            ),
+            widget.assignment.data()!.allowedFileTypes.isNotEmpty
+                ? IconTextButton(
+                    label: 'Upload Files',
+                    iconData: Icons.add,
+                    action: () async {
+                      FilePickerResult? result =
+                          await FilePicker.platform.pickFiles(
+                        type: FileType.custom,
+                        allowedExtensions: [
+                          for (final type
+                              in widget.assignment.data()!.allowedFileTypes)
+                            type.ext
+                        ],
+                      );
+                      if (result != null) {
+                        Database.insert(
+                          Database.submissionsColl,
+                          Submission(
+                            assignmentId: widget.assignment.id,
+                            submittedFiles: [],
+                            submittedText: '',
+                          ),
+                        );
+                      }
+                    },
+                    enabled: !(widget.assignment.data()!.assignmentStatus ==
+                        AssignmentStatus.submitted),
+                  )
+                : const TextField(),
             const SizedBox(height: 10),
-            widget.assignment.assignmentStatus == AssignmentStatus.submitted
+            widget.assignment.data()!.assignmentStatus ==
+                    AssignmentStatus.submitted
                 ? IconTextButton(
                     label: 'Undo Hand In',
                     iconData: Icons.close,
                     action: () {
-                      widget.assignment.assignmentStatus =
+                      widget.assignment.data()!.assignmentStatus =
                           AssignmentStatus.attempted;
-                      widget.assignment.feedbackItem = null;
+                      widget.assignment.data()!.feedbackItem = null;
                       setState(() {});
                     },
                     enabled: true,
@@ -126,10 +153,11 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer>
                     label: 'Hand In',
                     iconData: Icons.check,
                     action: () {
-                      widget.assignment.assignmentStatus =
+                      widget.assignment.data()!.assignmentStatus =
                           AssignmentStatus.submitted;
                       // dev only
-                      widget.assignment.feedbackItem = FeedbackItem(comments: [
+                      widget.assignment.data()!.feedbackItem =
+                          FeedbackItem(comments: [
                         CommentItem(
                           user: 'Small Sean',
                           content: 'Very insightful insights!',
@@ -148,13 +176,13 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer>
                 addOverlay(
                   overlay: OverlayEntry(builder: (BuildContext context) {
                     return StudentFeedbackOverlay(
-                      feedbackItem: widget.assignment.feedbackItem!,
+                      feedbackItem: widget.assignment.data()!.feedbackItem!,
                       dismiss: () => removeOverlay(),
                     );
                   }),
                 );
               },
-              enabled: widget.assignment.feedbackItem != null,
+              enabled: widget.assignment.data()!.feedbackItem != null,
             ),
             const SizedBox(height: 10),
           ],
@@ -163,13 +191,3 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer>
     );
   }
 }
-/**
- * class Assignment extends StudiousObject {
-  final String assignmentName;
-  final String description;
-  final List<MaterialItem> materials;
-  final List<MaterialItemType> allowedFileTypes;
-  final ReviewConfigs reviewConfigs;
-  final DateTime created;
-  final DateTime deadline;
- */

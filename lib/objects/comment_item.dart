@@ -41,6 +41,7 @@ class CommentItem extends StudiousObject {
             CommentStatus.fromString(json['commentStatus'] as String),
         upvotes = json['upvotes'] as int;
 
+  @override
   Map<String, Object?> toJson() => {
         'user': user,
         'content': content,

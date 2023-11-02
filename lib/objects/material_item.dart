@@ -46,6 +46,7 @@ class MaterialItem extends StudiousObject {
         materialType =
             MaterialItemType.fromString(json['materialType'] as String);
 
+  @override
   Map<String, Object?> toJson() => {
         'fileName': fileName,
         'materialType': materialType.ext,

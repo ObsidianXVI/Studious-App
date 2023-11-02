@@ -14,6 +14,7 @@ class FeedbackItem extends StudiousObject {
             CommentItem.fromJson(cmItem),
         ];
 
+  @override
   Map<String, Object?> toJson() => {
         'comments': [for (final cmt in comments) cmt.toJson()]
       };

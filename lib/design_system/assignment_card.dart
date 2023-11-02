@@ -1,7 +1,7 @@
 part of studious.ds;
 
 class AssignmentCard extends StatefulWidget {
-  final Assignment assignmentData;
+  final DocumentSnapshot<Assignment> assignmentData;
 
   const AssignmentCard({
     required this.assignmentData,
@@ -41,8 +41,8 @@ class AssignmentCardState extends State<AssignmentCard> {
                     );
                   } else {
                     return Teacher_Assignment_Viewer(
-                      assignment: widget.assignmentData,
-                      className: widget.assignmentData.className,
+                      assignment: widget.assignmentData.data()!,
+                      className: 'n',
                     );
                   }
                 },
@@ -68,7 +68,7 @@ class AssignmentCardState extends State<AssignmentCard> {
                     top: 0,
                     left: 0,
                     child: Text(
-                      widget.assignmentData.assignmentName,
+                      widget.assignmentData.data()!.assignmentName,
                       style: const TextStyle(
                         color: StudiousTheme.purple,
                         fontSize: 18,
@@ -79,7 +79,7 @@ class AssignmentCardState extends State<AssignmentCard> {
                     top: 25,
                     left: 0,
                     child: Text(
-                      widget.assignmentData.description,
+                      widget.assignmentData.data()!.description,
                       maxLines: 1,
                       softWrap: false,
                       style: const TextStyle(
@@ -93,10 +93,10 @@ class AssignmentCardState extends State<AssignmentCard> {
                     top: 0,
                     right: 0,
                     child: Text(
-                      widget.assignmentData.deadline.summary,
+                      widget.assignmentData.data()!.deadline.summary,
                       style: TextStyle(
                         color: semanticColorBasedOnDeadline(
-                          widget.assignmentData.deadline,
+                          widget.assignmentData.data()!.deadline,
                         ),
                         fontSize: 12,
                       ),
@@ -108,10 +108,14 @@ class AssignmentCardState extends State<AssignmentCard> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: List<Widget>.generate(
-                          widget.assignmentData.materials.length, (index) {
+                          widget.assignmentData.data()!.materials.length,
+                          (index) {
                         return Chip(
-                          avatar: widget.assignmentData.materials[index]
-                              .materialType.icon,
+                          avatar: widget.assignmentData
+                              .data()!
+                              .materials[index]
+                              .materialType
+                              .icon,
                           side: const BorderSide(
                             width: 1,
                             color: StudiousTheme.darkPurple,
@@ -119,7 +123,10 @@ class AssignmentCardState extends State<AssignmentCard> {
                           backgroundColor:
                               StudiousTheme.darkPurple.withOpacity(0.3),
                           label: Text(
-                            widget.assignmentData.materials[index].fileName,
+                            widget.assignmentData
+                                .data()!
+                                .materials[index]
+                                .fileName,
                             style: const TextStyle(
                               fontSize: 10,
                               color: StudiousTheme.darkPurple,
@@ -134,10 +141,13 @@ class AssignmentCardState extends State<AssignmentCard> {
                     right: 0,
                     child: SessionConfigs.studentMode
                         ? Text(
-                            widget.assignmentData.assignmentStatus.label,
+                            widget.assignmentData
+                                .data()!
+                                .assignmentStatus
+                                .label,
                             style: TextStyle(
                               color: semanticColorBasedOnDeadline(
-                                widget.assignmentData.deadline,
+                                widget.assignmentData.data()!.deadline,
                               ),
                               fontSize: 12,
                             ),

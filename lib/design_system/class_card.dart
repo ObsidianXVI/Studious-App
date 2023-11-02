@@ -31,18 +31,23 @@ class ClassCardState extends State<ClassCard> {
         borderRadius: BorderRadius.circular(5),
         child: GestureDetector(
           onTap: () async {
-            final List<Assignment> assignments = await Database.getAssignments(
-                widget.studentClassData.assignments);
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return AssignmentsView(
-                    assignments: assignments,
-                  );
-                },
-              ),
+            final List<DocumentSnapshot<Assignment>> assignments =
+                await Database.getAssignments(
+              widget.studentClassData.assignments,
             );
+
+            if (context.mounted) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return AssignmentsView(
+                      assignments: assignments,
+                    );
+                  },
+                ),
+              );
+            }
           },
           child: Container(
             width: 900,

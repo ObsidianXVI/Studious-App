@@ -35,7 +35,6 @@ class Assignment extends StudiousObject {
   final ReviewConfigs reviewConfigs;
   final DateTime created;
   final DateTime deadline;
-  final String className;
   AssignmentStatus assignmentStatus;
   FeedbackItem? feedbackItem;
 
@@ -43,7 +42,6 @@ class Assignment extends StudiousObject {
     required this.assignmentName,
     required this.description,
     required this.materials,
-    required this.className,
     required this.reviewConfigs,
     required this.allowedFileTypes,
     required this.created,
@@ -68,7 +66,6 @@ class Assignment extends StudiousObject {
             json['reviewConfigs'] as Map<String, Object?>),
         created = DateTime.parse(json['created'] as String),
         deadline = DateTime.parse(json['deadline'] as String),
-        className = json['className']! as String,
         assignmentStatus =
             AssignmentStatus.fromString(json['assignmentStatus'] as String),
         feedbackItem = json.containsKey('feedbackItem')
@@ -76,6 +73,7 @@ class Assignment extends StudiousObject {
                 json['feedbackItem'] as Map<String, Object?>)
             : null;
 
+  @override
   Map<String, Object?> toJson() => {
         'assignmentName': assignmentName,
         'description': description,
@@ -84,7 +82,6 @@ class Assignment extends StudiousObject {
         'reviewConfigs': reviewConfigs.toJson(),
         'created': created.toIso8601String(),
         'deadline': deadline.toIso8601String(),
-        'className': className,
         'assignmentStatus': assignmentStatus.label,
         'feedbackItem': feedbackItem?.toJson(),
       };

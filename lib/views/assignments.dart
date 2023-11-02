@@ -1,7 +1,7 @@
 part of studious.views;
 
 class AssignmentsView extends StatefulWidget {
-  final List<Assignment> assignments;
+  final List<DocumentSnapshot<Assignment>> assignments;
 
   const AssignmentsView({
     required this.assignments,
@@ -13,7 +13,7 @@ class AssignmentsView extends StatefulWidget {
 }
 
 class AssignmentsViewState extends State<AssignmentsView> {
-  final List<Assignment> filteredAssignments = [];
+  final List<DocumentSnapshot<Assignment>> filteredAssignments = [];
 
   @override
   void initState() {
@@ -24,7 +24,7 @@ class AssignmentsViewState extends State<AssignmentsView> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> assignmentCards = [];
-    for (Assignment assignment in filteredAssignments) {
+    for (DocumentSnapshot<Assignment> assignment in filteredAssignments) {
       assignmentCards.addAll([
         AssignmentCard(assignmentData: assignment),
         const SizedBox(height: 10),
@@ -37,12 +37,15 @@ class AssignmentsViewState extends State<AssignmentsView> {
         children: assignmentCards,
         onChangedCallback: (String value) {
           setState(() {
-            filteredAssignments
-              ..clear()
-              ..addAll(widget.assignments.where((Assignment a) => a
-                  .assignmentName
-                  .toLowerCase()
-                  .contains(value.toLowerCase())));
+            ///filteredAssignments
+            /* ..clear()
+              ..addAll(widget.assignments.where(
+                  (DocumentSnapshot<Assignment> a) => a
+                      .data()!
+                      .assignmentName
+                      .toLowerCase()
+                      .contains(value.toLowerCase()))) */
+            ;
           });
         },
       ),

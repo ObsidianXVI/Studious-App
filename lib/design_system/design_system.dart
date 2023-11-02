@@ -1,5 +1,6 @@
 library studious.ds;
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:studious/db/db.dart';
 import 'package:studious/objects/objects.dart';

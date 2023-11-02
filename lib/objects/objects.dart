@@ -9,7 +9,11 @@ part './review_configs.dart';
 part 'feedback_item.dart';
 part './comment_item.dart';
 part './person.dart';
+part './submission.dart';
 
 abstract class StudiousObject {
   const StudiousObject();
+
+  @mustCallSuper
+  Map<String, Object?> toJson();
 }

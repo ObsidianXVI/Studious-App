@@ -1,7 +1,7 @@
 part of studious.views;
 
 class Teacher_Assignment_Editor_View extends StatefulWidget {
-  final Assignment assignment;
+  final DocumentSnapshot<Assignment> assignment;
 
   const Teacher_Assignment_Editor_View({
     required this.assignment,
@@ -14,20 +14,20 @@ class Teacher_Assignment_Editor_View extends StatefulWidget {
 class Teacher_Assignment_Editor_ViewState
     extends State<Teacher_Assignment_Editor_View> {
   late final TextEditingController descTextController = TextEditingController(
-    text: widget.assignment.description,
+    text: widget.assignment.data()!.description,
   );
   DateTime? deadline;
 
   @override
   void initState() {
-    deadline = widget.assignment.deadline;
+    deadline = widget.assignment.data()!.deadline;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return ViewScaffold(
-      viewTitle: widget.assignment.assignmentName,
+      viewTitle: widget.assignment.data()!.assignmentName,
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,16 +47,20 @@ class Teacher_Assignment_Editor_ViewState
               spacing: 10,
               runSpacing: 5,
               children: List<Widget>.generate(
-                  widget.assignment.materials.length, (index) {
+                  widget.assignment.data()!.materials.length, (index) {
                 return Chip(
-                  avatar: widget.assignment.materials[index].materialType.icon,
+                  avatar: widget.assignment
+                      .data()!
+                      .materials[index]
+                      .materialType
+                      .icon,
                   side: const BorderSide(
                     width: 1,
                     color: StudiousTheme.darkPurple,
                   ),
                   backgroundColor: StudiousTheme.darkPurple.withOpacity(0.3),
                   label: Text(
-                    widget.assignment.materials[index].fileName,
+                    widget.assignment.data()!.materials[index].fileName,
                     style: const TextStyle(
                       fontSize: 10,
                       color: StudiousTheme.darkPurple,
@@ -115,7 +119,7 @@ class Teacher_Assignment_Editor_ViewState
                   ),
                 ),
                 Text(
-                  widget.assignment.created.summary,
+                  widget.assignment.data()!.created.summary,
                   style: const TextStyle(
                     color: StudiousTheme.purple,
                     fontWeight: FontWeight.bold,
@@ -137,18 +141,19 @@ class Teacher_Assignment_Editor_ViewState
               label: 'Upload Files',
               iconData: Icons.add,
               action: () {},
-              enabled: !(widget.assignment.assignmentStatus ==
+              enabled: !(widget.assignment.data()!.assignmentStatus ==
                   AssignmentStatus.submitted),
             ),
             const SizedBox(height: 10),
-            widget.assignment.assignmentStatus == AssignmentStatus.submitted
+            widget.assignment.data()!.assignmentStatus ==
+                    AssignmentStatus.submitted
                 ? IconTextButton(
                     label: 'Undo Hand In',
                     iconData: Icons.close,
                     action: () {
-                      widget.assignment.assignmentStatus =
+                      widget.assignment.data()!.assignmentStatus =
                           AssignmentStatus.attempted;
-                      widget.assignment.feedbackItem = null;
+                      widget.assignment.data()!.feedbackItem = null;
                     },
                     enabled: true,
                   )
@@ -156,10 +161,11 @@ class Teacher_Assignment_Editor_ViewState
                     label: 'Hand In',
                     iconData: Icons.check,
                     action: () {
-                      widget.assignment.assignmentStatus =
+                      widget.assignment.data()!.assignmentStatus =
                           AssignmentStatus.submitted;
                       // dev only
-                      widget.assignment.feedbackItem = FeedbackItem(comments: [
+                      widget.assignment.data()!.feedbackItem =
+                          FeedbackItem(comments: [
                         CommentItem(
                           user: 'Small Sean',
                           content: 'Very insightful insights!',
@@ -174,7 +180,7 @@ class Teacher_Assignment_Editor_ViewState
               label: 'View Feedback',
               iconData: Icons.comment,
               action: () {},
-              enabled: widget.assignment.feedbackItem != null,
+              enabled: widget.assignment.data()!.feedbackItem != null,
             ),
             const SizedBox(height: 10),
           ],

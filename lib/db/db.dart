@@ -24,6 +24,13 @@ class Database {
         toFirestore: (assignmentObj, _) => assignmentObj.toJson(),
       );
 
+  static final CollectionReference<Submission> submissionsColl = db
+      .collection('submissions')
+      .withConverter<Submission>(
+        fromFirestore: (snapshot, _) => Submission.fromJson(snapshot.data()!),
+        toFirestore: (submissionObj, _) => submissionObj.toJson(),
+      );
+
   static Future<void> init(FirebaseOptions webOptions) async {
     await Firebase.initializeApp(
       options: webOptions,
@@ -36,12 +43,20 @@ class Database {
     return [for (final doc in snapshot.docs) doc.data()];
   }
 
-  static Future<List<Assignment>> getAssignments(
+  static Future<List<DocumentSnapshot<Assignment>>> getAssignments(
       List<String> assignmentIds) async {
-    final List<Assignment> results = [];
-    for (String assignmentId in assignmentIds) {
-      results.add((await assignmentsColl.doc(assignmentId).get()).data()!);
-    }
+    final List<DocumentSnapshot<Assignment>> results = [
+      for (String assignmentId in assignmentIds)
+        await assignmentsColl.doc(assignmentId).get()
+    ];
+
     return results;
+  }
+
+  static Future<DocumentReference<T>> insert<T extends StudiousObject>(
+    CollectionReference<T> collection,
+    T object,
+  ) async {
+    return await collection.add(object);
   }
 }

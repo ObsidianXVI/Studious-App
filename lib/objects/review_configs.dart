@@ -16,6 +16,7 @@ class ReviewConfigs extends StudiousObject {
             : null,
         allowAnonReviewing = json['allowAnonReviewing'] as bool;
 
+  @override
   Map<String, Object?> toJson() => {
         'reviewTemplate': reviewTemplate?.toJson(),
         'allowAnonReviewing': allowAnonReviewing,
@@ -25,5 +26,6 @@ class ReviewConfigs extends StudiousObject {
 class ReviewTemplate extends StudiousObject {
   ReviewTemplate.fromJson(Map<String, Object?> json);
 
+  @override
   Map<String, Object?> toJson() => {};
 }

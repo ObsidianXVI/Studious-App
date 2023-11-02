@@ -8,4 +8,10 @@ class Person extends StudiousObject {
     required this.name,
     required this.formClass,
   });
+
+  @override
+  Map<String, Object?> toJson() => {
+        'name': name,
+        'formClass': formClass,
+      };
 }

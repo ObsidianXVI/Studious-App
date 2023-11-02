@@ -22,6 +22,7 @@ class Class extends StudiousObject {
         color = Color(int.parse(json['color'] as String)),
         assignments = (json['assignments'] as List).cast<String>();
 
+  @override
   Map<String, Object?> toJson() => {
         'className': className,
         'memberCount': memberCount,
