@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:studious/main.dart';
 
 final GlobalKey<ScaffoldMessengerState> snackbarKey =
     GlobalKey<ScaffoldMessengerState>();
@@ -49,4 +50,27 @@ extension DateUtils on DateTime {
     ]);
     return chunks.join(' ');
   }
+}
+
+void ensureAuthenticated(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (buildContext) => Center(
+      child: Container(
+        width: 600,
+        height: 300,
+        child: Column(
+          children: [
+            Text('Please log in to access this page'),
+            const SizedBox(height: 50),
+            TextButton(
+              onPressed: () =>
+                  Navigator.of(context).pushNamed(RouteNames.launch),
+              child: Text('Go to login'),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
 }

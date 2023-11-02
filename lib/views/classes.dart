@@ -1,7 +1,7 @@
 part of studious.views;
 
 class ClassesView extends StatefulWidget {
-  final List<Class> classes;
+  final List<DocumentSnapshot<Class>> classes;
 
   const ClassesView({
     required this.classes,
@@ -13,7 +13,7 @@ class ClassesView extends StatefulWidget {
 }
 
 class ClassesViewState extends State<ClassesView> {
-  final List<Class> filteredClasses = [];
+  final List<DocumentSnapshot<Class>> filteredClasses = [];
 
   @override
   void initState() {
@@ -24,7 +24,7 @@ class ClassesViewState extends State<ClassesView> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> classCards = [];
-    for (Class studentClass in filteredClasses) {
+    for (DocumentSnapshot<Class> studentClass in filteredClasses) {
       classCards.addAll([
         ClassCard(studentClassData: studentClass),
         const SizedBox(height: 10),
@@ -38,8 +38,11 @@ class ClassesViewState extends State<ClassesView> {
         setState(() {
           filteredClasses
             ..clear()
-            ..addAll(widget.classes.where((Class c) =>
-                c.className.toLowerCase().contains(value.toLowerCase())));
+            ..addAll(widget.classes.where((DocumentSnapshot<Class> c) => c
+                .data()!
+                .className
+                .toLowerCase()
+                .contains(value.toLowerCase())));
         });
       },
     );

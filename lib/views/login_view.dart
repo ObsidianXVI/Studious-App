@@ -1,7 +1,7 @@
 part of studious.views;
 
 class LoginView extends StatelessWidget {
-  final TextEditingController emailFieldController = TextEditingController();
+  final TextEditingController usernameFieldController = TextEditingController();
   final TextEditingController passwordFieldController = TextEditingController();
 
   LoginView({super.key});
@@ -30,7 +30,7 @@ class LoginView extends StatelessWidget {
               ),
               const SizedBox(height: 50),
               TextField(
-                controller: emailFieldController,
+                controller: usernameFieldController,
                 style: const TextStyle(
                   color: StudiousTheme.darkPurple,
                   fontWeight: FontWeight.w300,
@@ -39,7 +39,7 @@ class LoginView extends StatelessWidget {
                 ),
                 decoration: const InputDecoration(
                   label: Text(
-                    'Email Address',
+                    'Username',
                     style: TextStyle(
                       color: StudiousTheme.darkPurple,
                       fontWeight: FontWeight.w300,
@@ -80,17 +80,41 @@ class LoginView extends StatelessWidget {
               const SizedBox(height: 50),
               RectTextButton(
                 label: 'Log in',
-                action: () {
-                  // dev purposes only
-                  if (emailFieldController.value.text.contains('te')) {
-                    SessionConfigs.studentMode = false;
-                    Navigator.of(context).pushNamed(NavRoutes.classes);
-                  } else if (emailFieldController.value.text.contains('st')) {
-                    SessionConfigs.studentMode = true;
-                    Navigator.of(context).pushNamed(NavRoutes.classes);
+                action: () async {
+                  final QuerySnapshot<Student> queryResults =
+                      await Database.usersColl
+                          .where(
+                            'username',
+                            isEqualTo: usernameFieldController.text,
+                          )
+                          .where(
+                            'password',
+                            isEqualTo: passwordFieldController.text,
+                          )
+                          .get();
+                  if (queryResults.size == 0) {
+                    usernameFieldController.text = '';
+                    passwordFieldController.text = '';
+                    if (context.mounted) {
+                      showDialog(
+                        context: context,
+                        builder: (_) => Center(
+                          child: Container(
+                            width: 500,
+                            height: 300,
+                            color: Colors.red,
+                            child: const Center(
+                              child: Text('Invalid user credentials entered'),
+                            ),
+                          ),
+                        ),
+                      );
+                    }
                   } else {
-                    emailFieldController.clear();
-                    passwordFieldController.clear();
+                    student = queryResults.docs.first;
+                    if (context.mounted) {
+                      Navigator.of(context).pushNamed(RouteNames.classes);
+                    }
                   }
                 },
               ),

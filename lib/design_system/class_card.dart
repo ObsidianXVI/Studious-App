@@ -1,7 +1,7 @@
 part of studious.ds;
 
 class ClassCard extends StatefulWidget {
-  final Class studentClassData;
+  final DocumentSnapshot<Class> studentClassData;
 
   const ClassCard({
     required this.studentClassData,
@@ -14,6 +14,7 @@ class ClassCard extends StatefulWidget {
 
 class ClassCardState extends State<ClassCard> {
   double elevation = 0;
+  late final Class cl = widget.studentClassData.data()!;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class ClassCardState extends State<ClassCard> {
           onTap: () async {
             final List<DocumentSnapshot<Assignment>> assignments =
                 await Database.getAssignments(
-              widget.studentClassData.assignments,
+              cl.assignments,
             );
 
             if (context.mounted) {
@@ -54,7 +55,7 @@ class ClassCardState extends State<ClassCard> {
             height: 100,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
-              color: widget.studentClassData.color.withOpacity(0.1),
+              color: cl.color.withOpacity(0.1),
               border: Border.all(
                 color: StudiousTheme.purple,
                 width: 1,
@@ -68,7 +69,7 @@ class ClassCardState extends State<ClassCard> {
                     top: 0,
                     left: 0,
                     child: Text(
-                      widget.studentClassData.className,
+                      cl.className,
                       style: const TextStyle(
                         color: StudiousTheme.purple,
                         fontSize: 18,
@@ -79,7 +80,7 @@ class ClassCardState extends State<ClassCard> {
                     top: 0,
                     right: 0,
                     child: Text(
-                      widget.studentClassData.teacherName.toUpperCase(),
+                      cl.teacherName.toUpperCase(),
                       style: const TextStyle(
                         color: StudiousTheme.purple,
                         fontSize: 12,
@@ -90,7 +91,7 @@ class ClassCardState extends State<ClassCard> {
                     bottom: 0,
                     left: 0,
                     child: Text(
-                      "${widget.studentClassData.memberCount.toString()} members",
+                      "${cl.memberCount.toString()} members",
                       style: const TextStyle(
                         color: StudiousTheme.purple,
                         fontSize: 14,
