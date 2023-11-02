@@ -27,10 +27,10 @@ mixin OverlayTools<T extends StatefulWidget> on State<T> {
 
 class StudentFeedbackOverlay extends StatefulWidget {
   final Function()? dismiss;
-  final FeedbackItem feedbackItem;
+  final List<CommentItem> comments;
 
   const StudentFeedbackOverlay({
-    required this.feedbackItem,
+    required this.comments,
     this.dismiss,
     super.key,
   });
@@ -45,7 +45,7 @@ class StudentFeedbackOverlayState extends State<StudentFeedbackOverlay> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> commentItems = [];
-    for (CommentItem commentItem in widget.feedbackItem.comments) {
+    for (CommentItem commentItem in widget.comments) {
       commentItems.addAll([
         StudentCommentCard(
           commentItem: commentItem,
@@ -122,19 +122,20 @@ class StudentFeedbackOverlayState extends State<StudentFeedbackOverlay> {
                       ),
                     ),
                   ),
-                if (activeComment != null)
+                /* if (activeComment != null)
                   Column(
                     children: [
                       activeComment!,
                       Expanded(
                         child: SingleChildScrollView(
-                          child: activeComment!.commentItem.reference,
+                          child: activeComment!.commentItem,
                         ),
                       ),
+
                       /// Content of highlighted material
                       // Expanded(child: SingleChildScrollView(child: ,)),
                     ],
-                  ),
+                  ), */
               ],
             ),
           ),

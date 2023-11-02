@@ -28,15 +28,15 @@ enum AssignmentStatus {
 }
 
 class Assignment extends StudiousObject {
-  final String assignmentName;
-  final String description;
-  final List<MaterialItem> materials;
-  final List<MaterialItemType> allowedFileTypes;
-  final ReviewConfigs reviewConfigs;
-  final DateTime created;
-  final DateTime deadline;
+  String assignmentName;
+  String description;
+  List<MaterialItem> materials;
+  List<MaterialItemType> allowedFileTypes;
+  ReviewConfigs reviewConfigs;
+  DateTime created;
+  DateTime deadline;
   AssignmentStatus assignmentStatus;
-  FeedbackItem? feedbackItem;
+  List<CommentItem> comments;
 
   Assignment({
     required this.assignmentName,
@@ -46,7 +46,7 @@ class Assignment extends StudiousObject {
     required this.allowedFileTypes,
     required this.created,
     required this.deadline,
-    required this.feedbackItem,
+    required this.comments,
     required this.assignmentStatus,
   });
 
@@ -68,10 +68,11 @@ class Assignment extends StudiousObject {
         deadline = DateTime.parse(json['deadline'] as String),
         assignmentStatus =
             AssignmentStatus.fromString(json['assignmentStatus'] as String),
-        feedbackItem = json.containsKey('feedbackItem')
-            ? FeedbackItem.fromJson(
-                json['feedbackItem'] as Map<String, Object?>)
-            : null;
+        comments = [
+          for (final cm
+              in (json['comments'] as List).cast<Map<String, Object?>>())
+            CommentItem.fromJson(cm)
+        ];
 
   @override
   Map<String, Object?> toJson() => {
@@ -83,6 +84,6 @@ class Assignment extends StudiousObject {
         'created': created.toIso8601String(),
         'deadline': deadline.toIso8601String(),
         'assignmentStatus': assignmentStatus.label,
-        'feedbackItem': feedbackItem?.toJson(),
+        'comments': [for (final cm in comments) cm.toJson()],
       };
 }

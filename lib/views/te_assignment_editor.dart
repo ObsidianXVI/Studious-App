@@ -1,6 +1,6 @@
 part of studious.views;
 
-class Teacher_Assignment_Editor_View extends StatefulWidget {
+/* class Teacher_Assignment_Editor_View extends StatefulWidget {
   final DocumentSnapshot<Assignment> assignment;
 
   const Teacher_Assignment_Editor_View({
@@ -188,7 +188,7 @@ class Teacher_Assignment_Editor_ViewState
       ),
     );
   }
-}
+} */
 
  /**
   *  

@@ -1,10 +1,10 @@
 part of studious.objects;
 
 class ReviewConfigs extends StudiousObject {
-  final ReviewTemplate? reviewTemplate;
-  final bool allowAnonReviewing;
+  ReviewTemplate? reviewTemplate;
+  bool allowAnonReviewing;
 
-  const ReviewConfigs({
+  ReviewConfigs({
     required this.reviewTemplate,
     required this.allowAnonReviewing,
   });

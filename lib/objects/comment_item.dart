@@ -19,9 +19,8 @@ enum CommentStatus {
 }
 
 class CommentItem extends StudiousObject {
-  final String user;
-  final String content;
-  final Widget? reference;
+  String user;
+  String content;
   CommentStatus commentStatus;
   int upvotes;
 
@@ -30,13 +29,11 @@ class CommentItem extends StudiousObject {
     required this.content,
     required this.upvotes,
     this.commentStatus = CommentStatus.defaultStatus,
-    this.reference,
   });
 
   CommentItem.fromJson(Map<String, Object?> json)
       : user = json['user'] as String,
         content = json['content'] as String,
-        reference = null,
         commentStatus =
             CommentStatus.fromString(json['commentStatus'] as String),
         upvotes = json['upvotes'] as int;
@@ -45,7 +42,6 @@ class CommentItem extends StudiousObject {
   Map<String, Object?> toJson() => {
         'user': user,
         'content': content,
-        'reference': null,
         'commentStatus': commentStatus.name,
         'upvotes': upvotes,
       };

@@ -26,7 +26,7 @@ class Teacher_Assignment_Viewer extends StatelessWidget {
               (index) => StatusCard(
                 color: Colors.grey,
                 assignmentData: assignment,
-                person: const Person(
+                person: User(
                   name: 'Joanne Lim',
                   formClass: '5.13',
                 ),
@@ -43,7 +43,7 @@ class Teacher_Assignment_Viewer extends StatelessWidget {
               (index) => StatusCard(
                 color: Colors.lightBlue,
                 assignmentData: assignment,
-                person: const Person(
+                person: User(
                   name: 'Joanne Lim',
                   formClass: '5.13',
                 ),
@@ -60,7 +60,7 @@ class Teacher_Assignment_Viewer extends StatelessWidget {
               (index) => StatusCard(
                 color: Colors.purple,
                 assignmentData: assignment,
-                person: const Person(
+                person: User(
                   name: 'Joanne Lim',
                   formClass: '5.13',
                 ),
@@ -77,7 +77,7 @@ class Teacher_Assignment_Viewer extends StatelessWidget {
               (index) => StatusCard(
                 color: Colors.green,
                 assignmentData: assignment,
-                person: const Person(
+                person: User(
                   name: 'Joanne Lim',
                   formClass: '5.13',
                 ),
@@ -94,7 +94,7 @@ class Teacher_Assignment_Viewer extends StatelessWidget {
               (index) => StatusCard(
                 color: Colors.red,
                 assignmentData: assignment,
-                person: const Person(
+                person: User(
                   name: 'Joanne Lim',
                   formClass: '5.13',
                 ),

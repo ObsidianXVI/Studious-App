@@ -33,10 +33,10 @@ enum MaterialItemType {
 }
 
 class MaterialItem extends StudiousObject {
-  final String fileName;
-  final MaterialItemType materialType;
+  String fileName;
+  MaterialItemType materialType;
 
-  const MaterialItem({
+  MaterialItem({
     required this.fileName,
     required this.materialType,
   });

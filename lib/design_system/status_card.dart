@@ -1,7 +1,7 @@
 part of studious.ds;
 
 class StatusCard extends StatefulWidget {
-  final Person person;
+  final Student person;
   final Assignment assignmentData;
   final Color? color;
 

@@ -1,9 +1,9 @@
 part of studious.objects;
 
 class Submission extends StudiousObject {
-  final String assignmentId;
-  final List submittedFiles;
-  final String submittedText;
+  String assignmentId;
+  List submittedFiles;
+  String submittedText;
 
   Submission({
     required this.assignmentId,

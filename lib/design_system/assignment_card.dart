@@ -154,14 +154,14 @@ class AssignmentCardState extends State<AssignmentCard> {
                           )
                         : TextButton(
                             onPressed: () {
-                              Navigator.of(context).push(
+/*                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                     builder: (BuildContext context) {
                                   return Teacher_Assignment_Editor_View(
                                     assignment: widget.assignmentData,
                                   );
                                 }),
-                              );
+                              ); */
                             },
                             child: const Row(
                               children: [
