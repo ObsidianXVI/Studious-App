@@ -23,6 +23,29 @@ class AssignmentsViewState extends State<AssignmentsView> {
 
   @override
   Widget build(BuildContext context) {
+    return Material(
+      child: CardShelf(
+        shelfName: 'Assignments',
+        children: createAssignmentCards(filteredAssignments),
+        onChangedCallback: (String value) {
+          setState(() {
+            filteredAssignments
+              ..clear()
+              ..addAll(widget.assignments
+                  .where((DocumentSnapshot<Assignment> c) => c
+                      .data()!
+                      .assignmentName
+                      .toLowerCase()
+                      .contains(value.toLowerCase()))
+                  .toList());
+          });
+        },
+      ),
+    );
+  }
+
+  List<Widget> createAssignmentCards(
+      List<DocumentSnapshot<Assignment>> assignments) {
     final List<Widget> assignmentCards = [];
     for (DocumentSnapshot<Assignment> assignment in filteredAssignments) {
       assignmentCards.addAll([
@@ -30,23 +53,6 @@ class AssignmentsViewState extends State<AssignmentsView> {
         const SizedBox(height: 10),
       ]);
     }
-    return Material(
-      child: CardShelf(
-        shelfName: 'Assignments',
-        children: assignmentCards,
-        onChangedCallback: (String value) {
-          setState(() {
-            ///filteredAssignments
-            /* ..clear()
-              ..addAll(widget.assignments.where(
-                  (DocumentSnapshot<Assignment> a) => a
-                      .data()!
-                      .assignmentName
-                      .toLowerCase()
-                      .contains(value.toLowerCase()))) */
-          });
-        },
-      ),
-    );
+    return assignmentCards;
   }
 }

@@ -185,6 +185,23 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer>
                                       ..remove(widget.assignment.id)
                                   },
                                 );
+
+                                // record this in activity history
+                                await Database.update(
+                                  Database.usersColl,
+                                  studentId!,
+                                  {
+                                    'activities': [
+                                      for (var a in studentData.activities
+                                        ..add(Activity(
+                                          timestamp: DateTime.now(),
+                                          activityName:
+                                              'UNDO HAND IN: ${assignment.assignmentName}',
+                                        )))
+                                        a.toJson()
+                                    ],
+                                  },
+                                );
                                 await updateStudentData();
                                 setState(() {});
                               },
@@ -231,6 +248,23 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer>
                                     },
                                   );
                                 }
+
+                                // record this in activity history
+                                await Database.update(
+                                  Database.usersColl,
+                                  studentId!,
+                                  {
+                                    'activities': [
+                                      for (var a in studentData.activities
+                                        ..add(Activity(
+                                          timestamp: DateTime.now(),
+                                          activityName:
+                                              'HAND IN: ${assignment.assignmentName}',
+                                        )))
+                                        a.toJson()
+                                    ],
+                                  },
+                                );
 
                                 // dev only
                                 assignment.comments.add(

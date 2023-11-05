@@ -14,3 +14,4 @@ part './login_view.dart';
 part 'classes.dart';
 part 'assignments.dart';
 part './st_assignment_viewer.dart';
+part './activity.dart';

@@ -12,6 +12,7 @@ part './review_configs.dart';
 part './comment_item.dart';
 part 'user.dart';
 part './submission.dart';
+part './activity.dart';
 
 abstract class StudiousObject {
   const StudiousObject();

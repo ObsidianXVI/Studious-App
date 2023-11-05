@@ -44,7 +44,7 @@ class Database {
     await db.enablePersistence();
   }
 
-  static Future<List<DocumentSnapshot<Class>>> getClasess(
+  static Future<List<DocumentSnapshot<Class>>> getClasses(
     List<String> classIds,
   ) async {
     final List<DocumentSnapshot<Class>> results = [

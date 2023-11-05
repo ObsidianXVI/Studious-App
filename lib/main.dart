@@ -52,10 +52,22 @@ class StudiousAppState extends State<StudiousApp> {
                         classes: snapshot.data!,
                       );
                     } else {
-                      return Container();
+                      return const LoadingIndicator();
                     }
                   },
                 ),
+              ),
+            ),
+        RouteNames.activity: (_) => Material(
+              child: FutureBuilder(
+                future: getActivities(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData && snapshot.data != null) {
+                    return views.ActivityView(activites: snapshot.data!);
+                  } else {
+                    return const LoadingIndicator();
+                  }
+                },
               ),
             ),
       },
@@ -63,18 +75,17 @@ class StudiousAppState extends State<StudiousApp> {
   }
 
   Future<List<DocumentSnapshot<Class>>> getClasses() async {
-    return Database.getClasess(
+    return Database.getClasses(
         (await Database.getStudent(studentId!)).data()!.enrolledClasses);
+  }
+
+  Future<List<Activity>> getActivities() async {
+    return (await Database.getStudent(studentId!)).data()!.activities;
   }
 }
 
 class RouteNames {
   static const String classes = '/classes';
   static const String launch = '/launch';
-
-/*         '/students/assignment': (BuildContext context) {},
-        '/students/view-assignment': (BuildContext context) {},
-        '/teachers/classes': (BuildContext context) {},
-        '/teachers/assignments': (BuildContext context) {},
-        '/teachers/view-assignment': (BuildContext context) {}, */
+  static const String activity = '/activity';
 }
