@@ -14,7 +14,7 @@ class ClassCard extends StatefulWidget {
 
 class ClassCardState extends State<ClassCard> {
   double elevation = 0;
-  late final Class cl = widget.studentClassData.data()!;
+  Class get cl => widget.studentClassData.data()!;
 
   @override
   Widget build(BuildContext context) {
