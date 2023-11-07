@@ -32,20 +32,20 @@ class Assignment extends StudiousObject {
   String description;
   List<MaterialItem> materials;
   List<MaterialItemType> allowedFileTypes;
+  List<String> submissions;
   ReviewConfigs reviewConfigs;
   DateTime created;
   DateTime deadline;
-  List<CommentItem> comments;
 
   Assignment({
     required this.assignmentName,
     required this.description,
     required this.materials,
     required this.reviewConfigs,
+    required this.submissions,
     required this.allowedFileTypes,
     required this.created,
     required this.deadline,
-    required this.comments,
   });
 
   Assignment.fromJson(Map<String, Object?> json)
@@ -56,6 +56,7 @@ class Assignment extends StudiousObject {
               in (json['materials'] as List).cast<Map<String, Object?>>())
             MaterialItem.fromJson(mat)
         ],
+        submissions = (json['submissions'] as List).cast<String>(),
         allowedFileTypes = [
           for (final mat in (json['allowedFileTypes'] as List).cast<String>())
             MaterialItemType.fromString(mat)
@@ -63,22 +64,17 @@ class Assignment extends StudiousObject {
         reviewConfigs = ReviewConfigs.fromJson(
             json['reviewConfigs'] as Map<String, Object?>),
         created = DateTime.parse(json['created'] as String),
-        deadline = DateTime.parse(json['deadline'] as String),
-        comments = [
-          for (final cm
-              in (json['comments'] as List).cast<Map<String, Object?>>())
-            CommentItem.fromJson(cm)
-        ];
+        deadline = DateTime.parse(json['deadline'] as String);
 
   @override
   Map<String, Object?> toJson() => {
         'assignmentName': assignmentName,
         'description': description,
+        'submissions': submissions,
         'materials': [for (final mat in materials) mat.toJson()],
         'allowedFileTypes': [for (final ftype in allowedFileTypes) ftype.ext],
         'reviewConfigs': reviewConfigs.toJson(),
         'created': created.toIso8601String(),
         'deadline': deadline.toIso8601String(),
-        'comments': [for (final cm in comments) cm.toJson()],
       };
 }

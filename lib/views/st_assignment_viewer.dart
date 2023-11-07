@@ -30,7 +30,6 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer>
   Future<void> updateStudentData() async {
     student = await Database.getStudent(studentId!);
     studentData = student.data()!;
-    print(studentData.submissions.containsKey(widget.assignment.id));
   }
 
   @override
@@ -152,6 +151,7 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer>
                                       assignmentId: widget.assignment.id,
                                       submittedFiles: [],
                                       submittedText: '',
+                                      comments: [],
                                     ),
                                   );
                                 }
@@ -175,7 +175,6 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer>
                                     Database.submissionsColl,
                                     studentData
                                         .submissions[widget.assignment.id]!);
-                                assignment.comments.clear();
                                 // delete the associated submission for this assignment
                                 await Database.update(
                                   Database.usersColl,
@@ -215,6 +214,7 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer>
                                   assignmentId: widget.assignment.id,
                                   submittedFiles: [],
                                   submittedText: textController.text,
+                                  comments: [],
                                 );
                                 // create a new submission
                                 final DocumentReference<Submission> subRef =
@@ -266,14 +266,6 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer>
                                   },
                                 );
 
-                                // dev only
-                                assignment.comments.add(
-                                  CommentItem(
-                                    user: 'Small Sean',
-                                    content: 'Very insightful insights!',
-                                    upvotes: 2,
-                                  ),
-                                );
                                 await updateStudentData();
                                 setState(() {});
                               },
@@ -285,20 +277,38 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer>
                       IconTextButton(
                         label: 'View Feedback',
                         iconData: Icons.comment,
-                        action: () {
+                        enabled: studentData.submissions
+                            .containsKey(widget.assignment.id),
+                        action: () async {
+                          final DocumentSnapshot<Submission> submission =
+                              await Database.getSubmission(
+                            studentData.submissions[widget.assignment.id]!,
+                          );
                           addOverlay(
                             overlay:
                                 OverlayEntry(builder: (BuildContext context) {
                               return StudentFeedbackOverlay(
-                                comments: assignment.comments,
+                                comments: submission.data()!.comments,
                                 dismiss: () => removeOverlay(),
                               );
                             }),
                           );
                         },
-                        enabled: assignment.comments.isNotEmpty,
                       ),
                       const SizedBox(height: 10),
+                      IconTextButton(
+                        label: "View Others' Work",
+                        iconData: Icons.groups,
+                        enabled: studentData.submissions
+                            .containsKey(widget.assignment.id),
+                        action: () async {
+                          /* Material(
+                            child: CardShelf(
+                              data: [],
+                            )
+                          ); */
+                        },
+                      ),
                     ],
                   ),
                 ),

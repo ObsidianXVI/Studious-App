@@ -69,6 +69,11 @@ class Database {
     return usersColl.doc(studentId).get();
   }
 
+  static Future<DocumentSnapshot<Submission>> getSubmission(
+      String submissionId) {
+    return submissionsColl.doc(submissionId).get();
+  }
+
   static Future<DocumentReference<T>> insert<T extends StudiousObject>(
     CollectionReference<T> collection,
     T object,

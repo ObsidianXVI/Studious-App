@@ -45,9 +45,9 @@ class StudiousAppState extends State<StudiousApp> {
         RouteNames.classes: (_) => Material(
               child: SelectionArea(
                 child: FutureBuilder(
-                  future: getClasses(),
+                  future: getClasses(studentId!),
                   builder: (context, snapshot) {
-                    if (snapshot.hasData && snapshot.data != null) {
+                    if (snapshot.connectionState == ConnectionState.done) {
                       return views.ClassesView(
                         classes: snapshot.data!,
                       );
@@ -60,9 +60,9 @@ class StudiousAppState extends State<StudiousApp> {
             ),
         RouteNames.activity: (_) => Material(
               child: FutureBuilder(
-                future: getActivities(),
+                future: getActivities(studentId!),
                 builder: (context, snapshot) {
-                  if (snapshot.hasData && snapshot.data != null) {
+                  if (snapshot.connectionState == ConnectionState.done) {
                     return views.ActivityView(activites: snapshot.data!);
                   } else {
                     return const LoadingIndicator();
@@ -74,13 +74,13 @@ class StudiousAppState extends State<StudiousApp> {
     );
   }
 
-  Future<List<DocumentSnapshot<Class>>> getClasses() async {
+  Future<List<DocumentSnapshot<Class>>> getClasses(String studentId) async {
     return Database.getClasses(
-        (await Database.getStudent(studentId!)).data()!.enrolledClasses);
+        (await Database.getStudent(studentId)).data()!.enrolledClasses);
   }
 
-  Future<List<Activity>> getActivities() async {
-    return (await Database.getStudent(studentId!)).data()!.activities;
+  Future<List<Activity>> getActivities(String studentId) async {
+    return (await Database.getStudent(studentId)).data()!.activities;
   }
 }
 

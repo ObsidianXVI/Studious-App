@@ -20,14 +20,6 @@ class LaunchView extends StatelessWidget {
                 ),
               ),
               LoginView(),
-              const SizedBox(height: 20),
-              RectTextButton(
-                label: 'Student',
-                action: () {
-                  ensureAuthenticated(context);
-                  Navigator.pushNamed(context, RouteNames.classes);
-                },
-              ),
             ],
           ),
         ),

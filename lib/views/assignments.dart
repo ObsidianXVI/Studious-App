@@ -1,6 +1,6 @@
 part of studious.views;
 
-class AssignmentsView extends StatefulWidget {
+class AssignmentsView extends StatelessWidget {
   final List<DocumentSnapshot<Assignment>> assignments;
 
   const AssignmentsView({
@@ -9,50 +9,17 @@ class AssignmentsView extends StatefulWidget {
   });
 
   @override
-  State<AssignmentsView> createState() => AssignmentsViewState();
-}
-
-class AssignmentsViewState extends State<AssignmentsView> {
-  final List<DocumentSnapshot<Assignment>> filteredAssignments = [];
-
-  @override
-  void initState() {
-    filteredAssignments.addAll(widget.assignments);
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Material(
-      child: CardShelf(
-        shelfName: 'Assignments',
-        children: createAssignmentCards(filteredAssignments),
-        onChangedCallback: (String value) {
-          setState(() {
-            filteredAssignments
-              ..clear()
-              ..addAll(widget.assignments
-                  .where((DocumentSnapshot<Assignment> c) => c
-                      .data()!
-                      .assignmentName
-                      .toLowerCase()
-                      .contains(value.toLowerCase()))
-                  .toList());
-          });
-        },
-      ),
+    return CardShelf(
+      shelfName: 'Assignments',
+      data: assignments,
+      createWidget: (DocumentSnapshot<Assignment> assignment) =>
+          AssignmentCard(assignmentData: assignment, studentId: studentId!),
+      doesMatch: (value, assignment) => assignment
+          .data()!
+          .assignmentName
+          .toLowerCase()
+          .contains(value.toLowerCase()),
     );
-  }
-
-  List<Widget> createAssignmentCards(
-      List<DocumentSnapshot<Assignment>> assignments) {
-    final List<Widget> assignmentCards = [];
-    for (DocumentSnapshot<Assignment> assignment in filteredAssignments) {
-      assignmentCards.addAll([
-        AssignmentCard(assignmentData: assignment, studentId: studentId!),
-        const SizedBox(height: 10),
-      ]);
-    }
-    return assignmentCards;
   }
 }
