@@ -18,6 +18,8 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer>
   late final Assignment assignment = widget.assignment.data()!;
   late DocumentSnapshot<Student> student;
   late Student studentData;
+  late final Future<DocumentSnapshot<Submission>> submissionDataFuture =
+      Database.getSubmission(studentData.submissions[widget.assignment.id]!);
 
   late final Future dataFetchFuture;
 
@@ -31,6 +33,10 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer>
     student = await Database.getStudent(studentId!);
     studentData = student.data()!;
   }
+
+  bool get assignmentIsSubmitted =>
+      studentData.statusForAssignment(widget.assignment) ==
+      AssignmentStatus.submitted;
 
   @override
   Widget build(BuildContext context) {
@@ -130,51 +136,31 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer>
                         ),
                       ),
                       const SizedBox(height: 20),
-                      assignment.allowedFileTypes.isNotEmpty
-                          ? IconTextButton(
-                              label: 'Upload Files',
-                              iconData: Icons.add,
-                              action: () async {
-                                FilePickerResult? result =
-                                    await FilePicker.platform.pickFiles(
-                                  type: FileType.custom,
-                                  allowedExtensions: [
-                                    for (final type
-                                        in assignment.allowedFileTypes)
-                                      type.ext
-                                  ],
-                                );
-                                if (result != null) {
-                                  Database.insert(
-                                    Database.submissionsColl,
-                                    Submission(
-                                      assignmentId: widget.assignment.id,
-                                      submittedFiles: [],
-                                      submittedText: '',
-                                      comments: [],
-                                    ),
-                                  );
-                                }
-                              },
-                              enabled: !(studentData
-                                      .statusForAssignment(widget.assignment) ==
-                                  AssignmentStatus.submitted),
-                            )
+                      assignmentIsSubmitted
+                          ? FutureBuilder(
+                              future: submissionDataFuture,
+                              builder: (context, snapshot) {
+                                return snapshot.connectionState ==
+                                        ConnectionState.done
+                                    ? Text(snapshot.data!.data()!.submittedText)
+                                    : const CircularProgressIndicator();
+                              })
                           : TextField(
                               controller: textController,
                             ),
                       const SizedBox(height: 10),
-                      studentData.statusForAssignment(widget.assignment) ==
-                              AssignmentStatus.submitted
+                      assignmentIsSubmitted
                           ? IconTextButton(
                               label: 'Undo Hand In',
                               iconData: Icons.close,
                               action: () async {
+                                final String oldSubRef = studentData
+                                    .submissions[widget.assignment.id]!;
                                 // Delete the submission object
                                 await Database.delete(
-                                    Database.submissionsColl,
-                                    studentData
-                                        .submissions[widget.assignment.id]!);
+                                  Database.submissionsColl,
+                                  oldSubRef,
+                                );
                                 // delete the associated submission for this assignment
                                 await Database.update(
                                   Database.usersColl,
@@ -184,6 +170,13 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer>
                                       ..remove(widget.assignment.id)
                                   },
                                 );
+
+                                // delete the old submission from the assignment's document
+                                await Database.update(Database.assignmentsColl,
+                                    widget.assignment.id, {
+                                  'submissions': assignment.submissions
+                                    ..remove(oldSubRef),
+                                });
 
                                 // record this in activity history
                                 await Database.update(
@@ -209,6 +202,7 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer>
                           : IconTextButton(
                               label: 'Hand In',
                               iconData: Icons.check,
+                              enabled: !assignmentIsSubmitted,
                               action: () async {
                                 final Submission submission = Submission(
                                   assignmentId: widget.assignment.id,
@@ -233,9 +227,18 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer>
                                     studentId!,
                                     {'submissions': newMap},
                                   );
-                                  // delete the old submission
+                                  // delete the old submission from the Submissions collection
                                   await Database.delete(
                                       Database.submissionsColl, oldSubRef);
+                                  // delete the old submission from the assignment's document
+                                  // and inserts the new id
+                                  await Database.update(
+                                      Database.assignmentsColl,
+                                      widget.assignment.id, {
+                                    'submissions': assignment.submissions
+                                      ..remove(oldSubRef)
+                                      ..add(subRef.id),
+                                  });
                                 } else {
                                   // create a new entry for submission for this assignment
                                   await Database.update(
@@ -247,6 +250,21 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer>
                                             {widget.assignment.id: subRef.id})
                                     },
                                   );
+                                  // updates the assignment's submissions field
+                                  await Database.update(
+                                      Database.assignmentsColl,
+                                      widget.assignment.id, {
+                                    'submissions': assignment.submissions
+                                      ..add(subRef.id),
+                                  });
+
+                                  // inserts the submission into the assignment's document
+                                  await Database.update(
+                                      Database.assignmentsColl,
+                                      widget.assignment.id, {
+                                    'submissions': assignment.submissions
+                                      ..add(subRef.id),
+                                  });
                                 }
 
                                 // record this in activity history
@@ -269,9 +287,6 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer>
                                 await updateStudentData();
                                 setState(() {});
                               },
-                              enabled: studentData
-                                      .statusForAssignment(widget.assignment) !=
-                                  AssignmentStatus.submitted,
                             ),
                       const SizedBox(height: 10),
                       IconTextButton(
