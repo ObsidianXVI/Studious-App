@@ -257,14 +257,6 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer>
                                     'submissions': assignment.submissions
                                       ..add(subRef.id),
                                   });
-
-                                  // inserts the submission into the assignment's document
-                                  await Database.update(
-                                      Database.assignmentsColl,
-                                      widget.assignment.id, {
-                                    'submissions': assignment.submissions
-                                      ..add(subRef.id),
-                                  });
                                 }
 
                                 // record this in activity history
@@ -314,14 +306,19 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer>
                       IconTextButton(
                         label: "View Others' Work",
                         iconData: Icons.groups,
-                        enabled: studentData.submissions
-                            .containsKey(widget.assignment.id),
+                        enabled: assignmentIsSubmitted,
                         action: () async {
-                          /* Material(
-                            child: CardShelf(
-                              data: [],
-                            )
-                          ); */
+                          final List<DocumentSnapshot<Submission>> submissions =
+                              await Database.getAll(Database.submissionsColl,
+                                  assignment.submissions);
+                          if (mounted) {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) =>
+                                    SubmissionsView(submissions: submissions),
+                              ),
+                            );
+                          }
                         },
                       ),
                     ],

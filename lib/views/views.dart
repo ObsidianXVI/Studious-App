@@ -1,9 +1,7 @@
 library studious.views;
 
-import 'dart:collection';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:studious/db/db.dart';
 import 'package:studious/main.dart';
@@ -17,3 +15,5 @@ part 'classes.dart';
 part 'assignments.dart';
 part './st_assignment_viewer.dart';
 part './activity.dart';
+part './submissions_view.dart';
+part './feedback_view.dart';

@@ -95,4 +95,15 @@ class Database {
   ) {
     return collectionReference.doc(id).delete();
   }
+
+  static Future<List<DocumentSnapshot<T>>> getAll<T>(
+    CollectionReference<T> collection,
+    List<String> ids,
+  ) async {
+    final List<DocumentSnapshot<T>> results = [
+      for (String id in ids) await collection.doc(id).get()
+    ];
+
+    return results;
+  }
 }

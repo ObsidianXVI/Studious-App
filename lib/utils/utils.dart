@@ -52,6 +52,11 @@ extension DateUtils on DateTime {
   }
 }
 
+extension StringUtils on String {
+  bool containsSubset(String other) =>
+      toLowerCase().contains(other.toLowerCase());
+}
+
 void ensureAuthenticated(BuildContext context) {
   showDialog(
     context: context,

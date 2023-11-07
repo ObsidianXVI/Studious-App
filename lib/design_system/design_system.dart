@@ -1,7 +1,5 @@
 library studious.ds;
 
-import 'dart:html';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:studious/db/db.dart';
@@ -15,6 +13,7 @@ part './shelf.dart';
 part './view_scaffold.dart';
 part './class_card.dart';
 part './assignment_card.dart';
+part './submission_card.dart';
 part './utils.dart';
 part './st_feedback_overlay.dart';
 part './card_shelf.dart';

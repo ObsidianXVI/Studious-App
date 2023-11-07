@@ -15,11 +15,8 @@ class AssignmentsView extends StatelessWidget {
       data: assignments,
       createWidget: (DocumentSnapshot<Assignment> assignment) =>
           AssignmentCard(assignmentData: assignment, studentId: studentId!),
-      doesMatch: (value, assignment) => assignment
-          .data()!
-          .assignmentName
-          .toLowerCase()
-          .contains(value.toLowerCase()),
+      doesMatch: (value, assignment) =>
+          assignment.data()!.assignmentName.containsSubset(value),
     );
   }
 }
