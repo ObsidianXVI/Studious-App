@@ -11,9 +11,9 @@ import '../objects/objects.dart';
 
 part './launch_view.dart';
 part './login_view.dart';
-part 'classes.dart';
-part 'assignments.dart';
-part './st_assignment_viewer.dart';
+part 'classes_view.dart';
+part 'assignments_view.dart';
+part 'assignment_viewer.dart';
 part './activity.dart';
 part './submissions_view.dart';
 part './feedback_view.dart';

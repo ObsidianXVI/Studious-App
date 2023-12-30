@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:studious/db/db.dart';
-import 'package:studious/db/db_configs.dart';
 import 'package:studious/design_system/design_system.dart';
 import 'package:studious/objects/objects.dart';
 import './views/views.dart' as views;
@@ -10,7 +9,7 @@ import './utils/utils.dart' as utils;
 String? studentId;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Database.init(webOptions);
+  await Database.init();
   runApp(const StudiousApp());
 }
 
