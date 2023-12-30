@@ -40,8 +40,6 @@ class StudentFeedbackOverlay extends StatefulWidget {
 }
 
 class StudentFeedbackOverlayState extends State<StudentFeedbackOverlay> {
-  StudentCommentCard? activeComment;
-
   @override
   Widget build(BuildContext context) {
     final List<Widget> commentItems = [];
@@ -49,14 +47,8 @@ class StudentFeedbackOverlayState extends State<StudentFeedbackOverlay> {
       commentItems.addAll([
         StudentCommentCard(
           commentItem: commentItem,
-          onSelectCallback: (StudentCommentCard commentItem) {
-            activeComment = commentItem;
-            setState(() {});
-          },
-          onUnselectCallback: () {
-            activeComment = null;
-            setState(() {});
-          },
+          onSelectCallback: (StudentCommentCard commentItem) {},
+          onUnselectCallback: () {},
         ),
         const SizedBox(height: 10),
       ]);
@@ -66,7 +58,7 @@ class StudentFeedbackOverlayState extends State<StudentFeedbackOverlay> {
       child: Container(
         clipBehavior: Clip.antiAlias,
         width: double.infinity,
-        height: activeComment == null ? 700 : 900,
+        height: 700,
         decoration: BoxDecoration(
           color: StudiousTheme.white,
           /* border: Border.all(
@@ -114,14 +106,11 @@ class StudentFeedbackOverlayState extends State<StudentFeedbackOverlay> {
                   ],
                 ),
                 const SizedBox(height: 30),
-                if (activeComment == null)
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: commentItems,
-                      ),
-                    ),
+                SingleChildScrollView(
+                  child: Column(
+                    children: commentItems,
                   ),
+                ),
                 /* if (activeComment != null)
                   Column(
                     children: [

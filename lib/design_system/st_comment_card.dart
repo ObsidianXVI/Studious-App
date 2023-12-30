@@ -39,12 +39,6 @@ class StudentCommentCardState extends State<StudentCommentCard> {
           height: 120,
           decoration: BoxDecoration(
             color: StudiousTheme.purple.withOpacity(0.2),
-            border: isSelected
-                ? Border.all(
-                    width: 1,
-                    color: StudiousTheme.purple,
-                  )
-                : null,
             borderRadius: BorderRadius.circular(5),
           ),
           child: Padding(
