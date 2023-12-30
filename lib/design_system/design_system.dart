@@ -21,6 +21,7 @@ part 'st_comment_card.dart';
 part './shelf_gallery.dart';
 part './status_card.dart';
 part './loading_indicator.dart';
+part './activity_card.dart';
 
 class StudiousTheme {
   static const Color lightPurple = Color(0xFF8b6eae);

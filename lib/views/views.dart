@@ -16,6 +16,6 @@ part './login_view.dart';
 part 'classes_view.dart';
 part 'assignments_view.dart';
 part 'assignment_viewer.dart';
-part './activity.dart';
+part 'activity_view.dart';
 part './submissions_view.dart';
 part './feedback_view.dart';

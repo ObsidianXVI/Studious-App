@@ -50,9 +50,7 @@ class ViewScaffold extends StatelessWidget {
                   color: StudiousTheme.purple,
                 ), */
                   const SizedBox(height: 20),
-                  SingleChildScrollView(
-                    child: child,
-                  )
+                  child,
                 ],
               ),
             ),

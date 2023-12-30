@@ -84,6 +84,6 @@ class SubmissionCardState extends State<SubmissionCard> {
         ),
       ),
     );
-    ;
+    
   }
 }

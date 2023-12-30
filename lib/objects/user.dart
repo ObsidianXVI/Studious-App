@@ -64,7 +64,7 @@ class Student extends User {
     if (submissions.containsKey(assignment.id)) {
       return AssignmentStatus.submitted;
     } else {
-      return AssignmentStatus.unread;
+      return AssignmentStatus.inProgress;
     }
   }
 }
