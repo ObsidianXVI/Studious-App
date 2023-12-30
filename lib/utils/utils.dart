@@ -50,6 +50,31 @@ extension DateUtils on DateTime {
     ]);
     return chunks.join(' ');
   }
+
+  String get timeAgo {
+    Duration diff = DateTime.now().difference(this);
+    final String result;
+    if (diff.inDays > 365) {
+      result =
+          "${(diff.inDays / 365).floor()} ${(diff.inDays / 365).floor() == 1 ? "year" : "years"} ago";
+    } else if (diff.inDays > 30) {
+      result =
+          "${(diff.inDays / 30).floor()} ${(diff.inDays / 30).floor() == 1 ? "month" : "months"} ago";
+    } else if (diff.inDays > 7) {
+      result =
+          "${(diff.inDays / 7).floor()} ${(diff.inDays / 7).floor() == 1 ? "week" : "weeks"} ago";
+    } else if (diff.inDays > 0) {
+      result = "${diff.inDays} ${diff.inDays == 1 ? "day" : "days"} ago";
+    } else if (diff.inHours > 0) {
+      result = "${diff.inHours} ${diff.inHours == 1 ? "hour" : "hours"} ago";
+    } else if (diff.inMinutes > 0) {
+      result =
+          "${diff.inMinutes} ${diff.inMinutes == 1 ? "minute" : "minutes"} ago";
+    } else {
+      result = "just now";
+    }
+    return result;
+  }
 }
 
 extension StringUtils on String {

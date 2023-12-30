@@ -32,7 +32,9 @@ class _CardShelfState<T> extends State<CardShelf<T>> {
           SearchBox(
             onChangedCallback: (String newVal) {
               if (newVal.isEmpty) {
-                filteredItems = widget.data;
+                setState(() {
+                  filteredItems = widget.data;
+                });
               } else {
                 setState(() {
                   filteredItems =

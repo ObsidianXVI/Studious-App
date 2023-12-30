@@ -24,7 +24,7 @@ class ActivityView extends StatelessWidget {
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "${activites[i].activityName} at ${activites[i].timestamp.toIso8601String()}",
+                  "${activites[i].activityName}\n${activites[i].timestamp.timeAgo}",
                 ),
               ),
             ),
