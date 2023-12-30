@@ -1,9 +1,82 @@
 part of studious.views;
 
-class FeedbackView extends StatelessWidget {
+class FeedbackView extends StatefulWidget {
+  final DocumentSnapshot<Submission> subRef;
+
+  const FeedbackView({
+    required this.subRef,
+    super.key,
+  });
+
+  @override
+  State<StatefulWidget> createState() => FeedbackViewState();
+}
+
+class FeedbackViewState extends State<FeedbackView> {
+  final TextEditingController textController = TextEditingController();
+  late final Submission submission = widget.subRef.data()!;
+
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return ViewScaffold(
+      viewTitle: 'Feedback View',
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(submission.submittedText),
+          const SizedBox(height: 20),
+          TextField(controller: textController),
+          const SizedBox(height: 10),
+          RectTextButton(
+            label: 'Add Comment',
+            action: () async {
+              final CommentItem cmItem = CommentItem(
+                user: (await Database.getStudent(studentId!)).data()!.username,
+                content: textController.text,
+                upvotes: 0,
+              );
+              await Database.update(
+                Database.submissionsColl,
+                widget.subRef.id,
+                {
+                  'comments': [
+                    cmItem.toJson(),
+                    for (final cm in submission.comments) cm.toJson()
+                  ],
+                },
+              );
+              final String username =
+                  (await Database.getStudent(studentId!)).data()!.username;
+              setState(() {
+                submission.comments.insert(
+                  0,
+                  CommentItem(
+                    user: username,
+                    content: textController.text,
+                    upvotes: 0,
+                  ),
+                );
+              });
+              textController.clear();
+            },
+          ),
+          const SizedBox(height: 20),
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                for (final cmItem in submission.comments) ...[
+                  StudentCommentCard(
+                    commentItem: cmItem,
+                    onSelectCallback: (_) {},
+                    onUnselectCallback: () {},
+                  ),
+                  const SizedBox(height: 10),
+                ]
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

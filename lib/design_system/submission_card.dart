@@ -34,7 +34,8 @@ class SubmissionCardState extends State<SubmissionCard> {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => FeedbackView()),
+              MaterialPageRoute(
+                  builder: (_) => FeedbackView(subRef: widget.subData)),
             );
           },
           child: Container(
