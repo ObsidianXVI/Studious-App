@@ -17,7 +17,9 @@ class ViewScaffold extends StatelessWidget {
         appBar: AppBar(
           title: Text(
             viewTitle,
+            style: StudiousFont.appBarTitle(),
           ),
+          iconTheme: const IconThemeData(color: StudiousTheme.white),
           backgroundColor: StudiousTheme.darkPurple,
           shadowColor: Colors.transparent,
         ),
@@ -33,25 +35,9 @@ class ViewScaffold extends StatelessWidget {
                 top: 10,
                 bottom: 40,
               ),
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 10,
-                  ),
-/*                   Text(
-                    viewTitle,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    softWrap: false,
-                    style: StudiousFont.viewTitle(),
-                  ), */
-/*                 const Divider(
-                  height: 20,
-                  color: StudiousTheme.purple,
-                ), */
-                  const SizedBox(height: 20),
-                  child,
-                ],
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: child,
               ),
             ),
           ),

@@ -24,7 +24,7 @@ class FeedbackViewState extends State<FeedbackView> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(submission.submittedText),
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
           TextField(controller: textController),
           const SizedBox(height: 10),
           RectTextButton(
@@ -61,18 +61,20 @@ class FeedbackViewState extends State<FeedbackView> {
             },
           ),
           const SizedBox(height: 20),
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                for (final cmItem in submission.comments) ...[
-                  StudentCommentCard(
-                    commentItem: cmItem,
-                    onSelectCallback: (_) {},
-                    onUnselectCallback: () {},
-                  ),
-                  const SizedBox(height: 10),
-                ]
-              ],
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  for (final cmItem in submission.comments) ...[
+                    StudentCommentCard(
+                      commentItem: cmItem,
+                      onSelectCallback: (_) {},
+                      onUnselectCallback: () {},
+                    ),
+                    const SizedBox(height: 10),
+                  ]
+                ],
+              ),
             ),
           ),
         ],

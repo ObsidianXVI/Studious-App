@@ -33,7 +33,6 @@ class Assignment extends StudiousObject {
   List<MaterialItem> materials;
   List<MaterialItemType> allowedFileTypes;
   List<String> submissions;
-  ReviewConfigs reviewConfigs;
   DateTime created;
   DateTime deadline;
 
@@ -41,7 +40,6 @@ class Assignment extends StudiousObject {
     required this.assignmentName,
     required this.description,
     required this.materials,
-    required this.reviewConfigs,
     required this.submissions,
     required this.allowedFileTypes,
     required this.created,
@@ -61,8 +59,6 @@ class Assignment extends StudiousObject {
           for (final mat in (json['allowedFileTypes'] as List).cast<String>())
             MaterialItemType.fromString(mat)
         ],
-        reviewConfigs = ReviewConfigs.fromJson(
-            json['reviewConfigs'] as Map<String, Object?>),
         created = DateTime.parse(json['created'] as String),
         deadline = DateTime.parse(json['deadline'] as String);
 
@@ -73,7 +69,6 @@ class Assignment extends StudiousObject {
         'submissions': submissions,
         'materials': [for (final mat in materials) mat.toJson()],
         'allowedFileTypes': [for (final ftype in allowedFileTypes) ftype.ext],
-        'reviewConfigs': reviewConfigs.toJson(),
         'created': created.toIso8601String(),
         'deadline': deadline.toIso8601String(),
       };

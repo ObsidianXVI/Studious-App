@@ -44,14 +44,16 @@ class _CardShelfState<T> extends State<CardShelf<T>> {
             },
           ),
           const SizedBox(height: 20),
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                for (T t in filteredItems) ...[
-                  widget.createWidget(t),
-                  const SizedBox(height: 10),
-                ]
-              ],
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  for (T t in filteredItems) ...[
+                    widget.createWidget(t),
+                    const SizedBox(height: 10),
+                  ]
+                ],
+              ),
             ),
           ),
         ],

@@ -20,9 +20,11 @@ class RectTextButton extends StatelessWidget {
       child: Container(
         width: 120,
         height: 40,
-        color: StudiousTheme.purple,
-        child: Text(
-          label,
+        child: Center(
+          child: Text(
+            label,
+            style: StudiousFont.buttonText(),
+          ),
         ),
       ),
     );

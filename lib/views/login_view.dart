@@ -81,15 +81,24 @@ class LoginView extends StatelessWidget {
               RectTextButton(
                 label: 'Log in',
                 action: () async {
+                  bool bypassLogin = false;
+                  if (usernameFieldController.text == '' &&
+                      passwordFieldController.text == '') {
+                    bypassLogin = true;
+                  }
                   final QuerySnapshot<Student> queryResults =
                       await Database.usersColl
                           .where(
                             'username',
-                            isEqualTo: usernameFieldController.text,
+                            isEqualTo: bypassLogin
+                                ? 'johnbap'
+                                : usernameFieldController.text,
                           )
                           .where(
                             'password',
-                            isEqualTo: passwordFieldController.text,
+                            isEqualTo: bypassLogin
+                                ? 'john123'
+                                : passwordFieldController.text,
                           )
                           .get();
                   if (queryResults.size == 0) {

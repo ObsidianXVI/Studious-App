@@ -45,3 +45,6 @@ app.*.map.json
 lib/db/db_configs.dart
 ios/Runner/GoogleService-Info.plist
 ios/firebase_app_id_file.json
+
+# Pseudocode
+/pseudocode/

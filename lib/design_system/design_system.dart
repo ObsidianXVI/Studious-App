@@ -15,10 +15,9 @@ part './class_card.dart';
 part './assignment_card.dart';
 part './submission_card.dart';
 part './utils.dart';
-part './st_feedback_overlay.dart';
+part 'feedback_overlay.dart';
 part './card_shelf.dart';
-part 'st_comment_card.dart';
-part './shelf_gallery.dart';
+part 'comment_card.dart';
 part './status_card.dart';
 part './loading_indicator.dart';
 part './activity_card.dart';
@@ -43,6 +42,16 @@ class StudiousFont {
     );
   }
 
+  static TextStyle appBarTitle() {
+    return const TextStyle(
+      color: StudiousTheme.white,
+      fontSize: 34,
+      fontWeight: FontWeight.w700,
+      fontStyle: FontStyle.normal,
+      fontFamily: defaultFont,
+    );
+  }
+
   static TextStyle viewTitle() {
     return const TextStyle(
       color: StudiousTheme.purple,
@@ -56,6 +65,16 @@ class StudiousFont {
   static TextStyle body() {
     return const TextStyle(
       color: StudiousTheme.purple,
+      fontSize: 16,
+      fontWeight: FontWeight.w400,
+      fontStyle: FontStyle.normal,
+      fontFamily: defaultFont,
+    );
+  }
+
+  static TextStyle buttonText() {
+    return const TextStyle(
+      color: StudiousTheme.white,
       fontSize: 16,
       fontWeight: FontWeight.w400,
       fontStyle: FontStyle.normal,

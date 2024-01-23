@@ -44,7 +44,13 @@ class StudiousAppState extends State<StudiousApp> {
         RouteNames.classes: (_) => Material(
               child: SelectionArea(
                 child: FutureBuilder(
-                  future: getClasses(studentId!),
+                  future: () async {
+                    if (studentId == null && mounted) {
+                      Navigator.of(context).pushNamed(RouteNames.launch);
+                    } else {
+                      return await getClasses(studentId!);
+                    }
+                  }(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
                       return views.ClassesView(
@@ -59,7 +65,13 @@ class StudiousAppState extends State<StudiousApp> {
             ),
         RouteNames.activity: (_) => Material(
               child: FutureBuilder(
-                future: getActivities(studentId!),
+                future: () async {
+                  if (studentId == null && mounted) {
+                    Navigator.of(context).pushNamed(RouteNames.launch);
+                  } else {
+                    return await getActivities(studentId!);
+                  }
+                }(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     return views.ActivityView(activites: snapshot.data!);
