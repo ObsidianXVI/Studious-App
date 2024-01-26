@@ -1,13 +1,21 @@
 part of studious.ds;
 
-class SearchBox extends StatelessWidget {
+class SearchBox extends StatefulWidget {
   final void Function(String) onChangedCallback;
+  final void Function(bool) onSortToggled;
 
   const SearchBox({
     required this.onChangedCallback,
+    required this.onSortToggled,
     super.key,
   });
 
+  @override
+  State<StatefulWidget> createState() => SearchBoxState();
+}
+
+class SearchBoxState extends State<SearchBox> {
+  bool sortEnabled = false;
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -26,35 +34,26 @@ class SearchBox extends StatelessWidget {
             Expanded(
               child: TextField(
                 style: StudiousFont.body(),
-                onChanged: onChangedCallback,
+                onChanged: widget.onChangedCallback,
               ),
             ),
             const Spacer(),
-            Center(
-              child: Container(
-                width: 30,
-                height: 50,
-                child: TextButton(
-                  onPressed: () {},
-                  child: const Center(
-                    child: Icon(
-                      Icons.search_rounded,
-                      color: StudiousTheme.purple,
-                    ),
-                  ),
-                ),
-              ),
-            ),
             const SizedBox(width: 5),
             Center(
               child: Container(
                 width: 35,
                 height: 50,
+                color: sortEnabled
+                    ? StudiousTheme.lightPurple
+                    : Colors.transparent,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    sortEnabled = !sortEnabled;
+                    widget.onSortToggled(sortEnabled);
+                  },
                   child: const Center(
                     child: Icon(
-                      Icons.filter_alt,
+                      Icons.sort,
                       color: StudiousTheme.purple,
                     ),
                   ),

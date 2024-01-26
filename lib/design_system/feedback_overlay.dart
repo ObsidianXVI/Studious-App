@@ -45,11 +45,7 @@ class StudentFeedbackOverlayState extends State<StudentFeedbackOverlay> {
     final List<Widget> commentItems = [];
     for (CommentItem commentItem in widget.comments) {
       commentItems.addAll([
-        StudentCommentCard(
-          commentItem: commentItem,
-          onSelectCallback: (StudentCommentCard commentItem) {},
-          onUnselectCallback: () {},
-        ),
+        StudentCommentCard(commentItem: commentItem),
         const SizedBox(height: 10),
       ]);
     }

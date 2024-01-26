@@ -9,11 +9,16 @@ class CardShelf<T> extends StatefulWidget {
   /// a match for a given item [T]
   final bool Function(String, T) doesMatch;
 
+  /// Defines a function that sorts the cards. Leave null to hide the sort
+  /// button.
+  final List<T> Function(List<T>)? sortFn;
+
   const CardShelf({
     required this.shelfName,
     required this.data,
     required this.createWidget,
     required this.doesMatch,
+    this.sortFn,
     super.key,
   });
   @override
@@ -40,6 +45,19 @@ class _CardShelfState<T> extends State<CardShelf<T>> {
                   filteredItems =
                       widget.data.where((e) => widget.doesMatch(newVal, e));
                 });
+              }
+            },
+            onSortToggled: (sortEnabled) {
+              if (widget.sortFn != null) {
+                if (sortEnabled) {
+                  setState(() {
+                    filteredItems = widget.sortFn!.call(widget.data);
+                  });
+                } else {
+                  setState(() {
+                    filteredItems = widget.data;
+                  });
+                }
               }
             },
           ),

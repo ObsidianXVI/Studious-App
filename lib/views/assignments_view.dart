@@ -17,6 +17,10 @@ class AssignmentsView extends StatelessWidget {
           AssignmentCard(assignmentData: assignment, studentId: studentId!),
       doesMatch: (value, assignment) =>
           assignment.data()!.assignmentName.containsSubset(value),
+      sortFn: (List<DocumentSnapshot<Assignment>> assignments) {
+        return assignments;
+        //..sort((a, b) => a.data()!.deadline.compareTo(b.data()!.deadline));
+      },
     );
   }
 }

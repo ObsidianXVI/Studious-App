@@ -33,7 +33,6 @@ class FeedbackViewState extends State<FeedbackView> {
               final CommentItem cmItem = CommentItem(
                 user: (await Database.getStudent(studentId!)).data()!.username,
                 content: textController.text,
-                upvotes: 0,
               );
               await Database.update(
                 Database.submissionsColl,
@@ -53,7 +52,6 @@ class FeedbackViewState extends State<FeedbackView> {
                   CommentItem(
                     user: username,
                     content: textController.text,
-                    upvotes: 0,
                   ),
                 );
               });
@@ -68,8 +66,6 @@ class FeedbackViewState extends State<FeedbackView> {
                   for (final cmItem in submission.comments) ...[
                     StudentCommentCard(
                       commentItem: cmItem,
-                      onSelectCallback: (_) {},
-                      onUnselectCallback: () {},
                     ),
                     const SizedBox(height: 10),
                   ]
