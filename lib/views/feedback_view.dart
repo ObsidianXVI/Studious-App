@@ -64,7 +64,7 @@ class FeedbackViewState extends State<FeedbackView> {
               child: Column(
                 children: [
                   for (final cmItem in submission.comments) ...[
-                    StudentCommentCard(
+                    CommentCard(
                       commentItem: cmItem,
                     ),
                     const SizedBox(height: 10),

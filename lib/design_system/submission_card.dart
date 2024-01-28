@@ -15,6 +15,9 @@ class SubmissionCard extends StatefulWidget {
 class SubmissionCardState extends State<SubmissionCard> {
   double elevation = 0;
   late Submission sub = widget.subData.data()!;
+  late final studentNameFuture = () async {
+    return (await Database.getStudent(widget.subData.data()!.userId)).data()!;
+  }();
 
   @override
   Widget build(BuildContext context) {
@@ -53,15 +56,28 @@ class SubmissionCardState extends State<SubmissionCard> {
               padding: const EdgeInsets.all(10),
               child: Stack(
                 children: [
-                  const Positioned(
+                  Positioned(
                     top: 0,
                     left: 0,
-                    child: Text(
-                      "Anonymous",
-                      style: TextStyle(
-                        color: StudiousTheme.purple,
-                        fontSize: 18,
-                      ),
+                    child: FutureBuilder(
+                      future: studentNameFuture,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          return Text(
+                            snapshot.data!.name,
+                            style: const TextStyle(
+                              color: StudiousTheme.purple,
+                              fontSize: 18,
+                            ),
+                          );
+                        } else {
+                          return const SizedBox(
+                            height: 50,
+                            width: 50,
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      },
                     ),
                   ),
                   Positioned(
@@ -84,6 +100,5 @@ class SubmissionCardState extends State<SubmissionCard> {
         ),
       ),
     );
-    
   }
 }

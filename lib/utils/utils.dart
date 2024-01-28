@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:studious/main.dart';
 
 final GlobalKey<ScaffoldMessengerState> snackbarKey =
     GlobalKey<ScaffoldMessengerState>();
@@ -103,4 +102,10 @@ void ensureAuthenticated(BuildContext context) {
       ),
     ),
   );
+}
+
+class RouteNames {
+  static const String classes = '/classes';
+  static const String launch = '/launch';
+  static const String activity = '/activity';
 }

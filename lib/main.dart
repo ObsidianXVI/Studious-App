@@ -4,7 +4,7 @@ import 'package:studious/db/db.dart';
 import 'package:studious/design_system/design_system.dart';
 import 'package:studious/objects/objects.dart';
 import './views/views.dart' as views;
-import './utils/utils.dart' as utils;
+import './utils/utils.dart';
 
 String? studentId;
 void main() async {
@@ -25,7 +25,7 @@ class StudiousAppState extends State<StudiousApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      scaffoldMessengerKey: utils.snackbarKey,
+      scaffoldMessengerKey: snackbarKey,
       theme: ThemeData(
         fontFamily: 'Rubik',
         inputDecorationTheme: const InputDecorationTheme(
@@ -93,10 +93,4 @@ class StudiousAppState extends State<StudiousApp> {
   Future<List<Activity>> getActivities(String studentId) async {
     return (await Database.getStudent(studentId)).data()!.activities;
   }
-}
-
-class RouteNames {
-  static const String classes = '/classes';
-  static const String launch = '/launch';
-  static const String activity = '/activity';
 }

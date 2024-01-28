@@ -1,19 +1,18 @@
 part of studious.views;
 
-class Student_Assignment_Viewer extends StatefulWidget {
+class AssignmentViewer extends StatefulWidget {
   final DocumentSnapshot<Assignment> assignment;
 
-  const Student_Assignment_Viewer({
+  const AssignmentViewer({
     required this.assignment,
     super.key,
   });
 
   @override
-  State<StatefulWidget> createState() => Student_Assignment_ViewerState();
+  State<StatefulWidget> createState() => AssignmentViewerState();
 }
 
-class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer>
-    with OverlayTools {
+class AssignmentViewerState extends State<AssignmentViewer> with OverlayTools {
   final TextEditingController textController = TextEditingController();
   late final Assignment assignment = widget.assignment.data()!;
   late DocumentSnapshot<Student> student;
@@ -205,6 +204,7 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer>
                               enabled: !assignmentIsSubmitted,
                               action: () async {
                                 final Submission submission = Submission(
+                                  userId: studentId!,
                                   assignmentId: widget.assignment.id,
                                   submittedFiles: [],
                                   submittedText: textController.text,
@@ -294,7 +294,7 @@ class Student_Assignment_ViewerState extends State<Student_Assignment_Viewer>
                           addOverlay(
                             overlay:
                                 OverlayEntry(builder: (BuildContext context) {
-                              return StudentFeedbackOverlay(
+                              return FeedbackOverlay(
                                 comments: submission.data()!.comments,
                                 dismiss: () => removeOverlay(),
                               );

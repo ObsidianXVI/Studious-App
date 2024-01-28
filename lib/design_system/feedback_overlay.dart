@@ -25,27 +25,27 @@ mixin OverlayTools<T extends StatefulWidget> on State<T> {
   }
 }
 
-class StudentFeedbackOverlay extends StatefulWidget {
+class FeedbackOverlay extends StatefulWidget {
   final Function()? dismiss;
   final List<CommentItem> comments;
 
-  const StudentFeedbackOverlay({
+  const FeedbackOverlay({
     required this.comments,
     this.dismiss,
     super.key,
   });
 
   @override
-  createState() => StudentFeedbackOverlayState();
+  createState() => FeedbackOverlayState();
 }
 
-class StudentFeedbackOverlayState extends State<StudentFeedbackOverlay> {
+class FeedbackOverlayState extends State<FeedbackOverlay> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> commentItems = [];
     for (CommentItem commentItem in widget.comments) {
       commentItems.addAll([
-        StudentCommentCard(commentItem: commentItem),
+        CommentCard(commentItem: commentItem),
         const SizedBox(height: 10),
       ]);
     }
@@ -57,10 +57,6 @@ class StudentFeedbackOverlayState extends State<StudentFeedbackOverlay> {
         height: 700,
         decoration: BoxDecoration(
           color: StudiousTheme.white,
-          /* border: Border.all(
-            width: 2,
-            color: StudiousTheme.purple,
-          ), */
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(15),
             topRight: Radius.circular(15),
@@ -107,20 +103,6 @@ class StudentFeedbackOverlayState extends State<StudentFeedbackOverlay> {
                     children: commentItems,
                   ),
                 ),
-                /* if (activeComment != null)
-                  Column(
-                    children: [
-                      activeComment!,
-                      Expanded(
-                        child: SingleChildScrollView(
-                          child: activeComment!.commentItem,
-                        ),
-                      ),
-
-                      /// Content of highlighted material
-                      // Expanded(child: SingleChildScrollView(child: ,)),
-                    ],
-                  ), */
               ],
             ),
           ),

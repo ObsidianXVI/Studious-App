@@ -12,7 +12,7 @@ class ActivityView extends StatelessWidget {
   Widget build(BuildContext context) {
     return CardShelf(
       shelfName: 'Activity History',
-      data: activites,
+      data: activites..sort((a, b) => b.timestamp.compareTo(a.timestamp)),
       createWidget: (activity) => ActivityCard(activity: activity),
       doesMatch: (term, activity) =>
           activity.activityName.contains(term) ||

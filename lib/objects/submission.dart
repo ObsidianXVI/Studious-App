@@ -4,9 +4,11 @@ class Submission extends StudiousObject {
   String assignmentId;
   List submittedFiles;
   String submittedText;
+  String userId;
   List<CommentItem> comments;
 
   Submission({
+    required this.userId,
     required this.assignmentId,
     required this.submittedFiles,
     required this.submittedText,
@@ -14,7 +16,8 @@ class Submission extends StudiousObject {
   });
 
   Submission.fromJson(Map<String, Object?> json)
-      : assignmentId = json['assignmentId']! as String,
+      : userId = json['userId']! as String,
+        assignmentId = json['assignmentId']! as String,
         submittedFiles = [],
         submittedText = json['submittedText'] as String,
         comments = [
@@ -25,6 +28,7 @@ class Submission extends StudiousObject {
 
   @override
   Map<String, Object?> toJson() => {
+        'userId': userId,
         'assignmentId': assignmentId,
         'submittedFiles': [],
         'submittedText': submittedText,

@@ -53,7 +53,7 @@ class AssignmentCardState extends State<AssignmentCard> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => Student_Assignment_Viewer(
+                          builder: (_) => AssignmentViewer(
                             assignment: widget.assignmentData,
                           ),
                         ),

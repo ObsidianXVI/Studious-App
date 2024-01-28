@@ -1,18 +1,18 @@
 part of studious.ds;
 
-class StudentCommentCard extends StatefulWidget {
+class CommentCard extends StatefulWidget {
   final CommentItem commentItem;
 
-  const StudentCommentCard({
+  const CommentCard({
     required this.commentItem,
     super.key,
   });
 
   @override
-  createState() => StudentCommentCardState();
+  createState() => CommentCardState();
 }
 
-class StudentCommentCardState extends State<StudentCommentCard> {
+class CommentCardState extends State<CommentCard> {
   bool hasBeenUpvoted = false;
   bool isSelected = false;
 
