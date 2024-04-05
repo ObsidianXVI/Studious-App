@@ -6,10 +6,9 @@ import 'package:studious/objects/objects.dart';
 import './views/views.dart' as views;
 import './utils/utils.dart';
 
-String? studentId;
+String? studentId = 'SBkmZnwJN36tDARZazl8';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await Database.init();
   runApp(const StudiousApp());
 }
