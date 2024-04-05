@@ -19,6 +19,7 @@ class ClassCardState extends State<ClassCard> {
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
+      cursor: SystemMouseCursors.click,
       onEnter: (event) {
         elevation = 10;
         setState(() {});

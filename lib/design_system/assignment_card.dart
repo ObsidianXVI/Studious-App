@@ -37,6 +37,7 @@ class AssignmentCardState extends State<AssignmentCard> {
         return snapshot.connectionState == ConnectionState.waiting
             ? const CircularProgressIndicator()
             : MouseRegion(
+                cursor: SystemMouseCursors.click,
                 onEnter: (event) {
                   elevation = 10;
                   setState(() {});

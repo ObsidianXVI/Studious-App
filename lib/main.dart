@@ -9,6 +9,7 @@ import './utils/utils.dart';
 String? studentId;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Database.init();
   runApp(const StudiousApp());
 }
@@ -42,25 +43,23 @@ class StudiousAppState extends State<StudiousApp> {
               child: views.LaunchView(),
             ),
         RouteNames.classes: (_) => Material(
-              child: SelectionArea(
-                child: FutureBuilder(
-                  future: () async {
-                    if (studentId == null && mounted) {
-                      Navigator.of(context).pushNamed(RouteNames.launch);
-                    } else {
-                      return await getClasses(studentId!);
-                    }
-                  }(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      return views.ClassesView(
-                        classes: snapshot.data!,
-                      );
-                    } else {
-                      return const LoadingIndicator();
-                    }
-                  },
-                ),
+              child: FutureBuilder(
+                future: () async {
+                  if (studentId == null && mounted) {
+                    Navigator.of(context).pushNamed(RouteNames.launch);
+                  } else {
+                    return await getClasses(studentId!);
+                  }
+                }(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return views.ClassesView(
+                      classes: snapshot.data!,
+                    );
+                  } else {
+                    return const LoadingIndicator();
+                  }
+                },
               ),
             ),
         RouteNames.activity: (_) => Material(

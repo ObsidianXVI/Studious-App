@@ -18,6 +18,7 @@ class ActivityCardState extends State<ActivityCard> {
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
+      cursor: SystemMouseCursors.click,
       onEnter: (event) {
         elevation = 10;
         setState(() {});

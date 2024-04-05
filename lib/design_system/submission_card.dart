@@ -22,6 +22,7 @@ class SubmissionCardState extends State<SubmissionCard> {
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
+      cursor: SystemMouseCursors.click,
       onEnter: (event) {
         elevation = 10;
         setState(() {});

@@ -63,6 +63,17 @@ class Database {
     return results;
   }
 
+  static Future<List<DocumentSnapshot<Assignment>>>
+      getAssignmentsDueSoon() async {
+    final int curr = DateTime.now().millisecondsSinceEpoch;
+    final List<DocumentSnapshot<Assignment>> results = (await assignmentsColl
+            .where('deadline', isGreaterThanOrEqualTo: curr)
+            .where('deadline', isLessThan: curr + (7 * 24 * 60 * 60 * 1000))
+            .get())
+        .docs;
+    return results;
+  }
+
   static Future<DocumentSnapshot<Student>> getStudent(String studentId) {
     return usersColl.doc(studentId).get();
   }

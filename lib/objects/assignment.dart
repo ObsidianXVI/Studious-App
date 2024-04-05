@@ -59,8 +59,8 @@ class Assignment extends StudiousObject {
           for (final mat in (json['allowedFileTypes'] as List).cast<String>())
             MaterialItemType.fromString(mat)
         ],
-        created = DateTime.parse(json['created'] as String),
-        deadline = DateTime.parse(json['deadline'] as String);
+        created = DateTime.fromMillisecondsSinceEpoch(json['created'] as int),
+        deadline = DateTime.fromMillisecondsSinceEpoch(json['deadline'] as int);
 
   @override
   Map<String, Object?> toJson() => {
@@ -69,7 +69,7 @@ class Assignment extends StudiousObject {
         'submissions': submissions,
         'materials': [for (final mat in materials) mat.toJson()],
         'allowedFileTypes': [for (final ftype in allowedFileTypes) ftype.ext],
-        'created': created.toIso8601String(),
-        'deadline': deadline.toIso8601String(),
+        'created': created.millisecondsSinceEpoch,
+        'deadline': deadline.millisecondsSinceEpoch,
       };
 }
