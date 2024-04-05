@@ -27,6 +27,7 @@ class StudiousAppState extends State<StudiousApp> {
       debugShowCheckedModeBanner: false,
       scaffoldMessengerKey: snackbarKey,
       theme: ThemeData(
+        useMaterial3: false,
         fontFamily: 'Rubik',
         inputDecorationTheme: const InputDecorationTheme(
           focusedBorder: InputBorder.none,

@@ -98,11 +98,13 @@ class FeedbackOverlayState extends State<FeedbackOverlay> {
                   ],
                 ),
                 const SizedBox(height: 30),
-                SingleChildScrollView(
-                  child: Column(
-                    children: commentItems,
-                  ),
-                ),
+                commentItems.isEmpty
+                    ? const Text('No comments yet!')
+                    : SingleChildScrollView(
+                        child: Column(
+                          children: commentItems,
+                        ),
+                      ),
               ],
             ),
           ),
