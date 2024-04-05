@@ -14,6 +14,24 @@ class ViewScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Scaffold(
+        persistentFooterAlignment: AlignmentDirectional.center,
+        persistentFooterButtons: [
+          TextButton(
+            child: const Icon(Icons.home),
+            onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (_) => const Material(child: LaunchView()))),
+          ),
+          TextButton(
+            child: const Icon(Icons.list_alt),
+            onPressed: () =>
+                Navigator.of(context).pushNamed(RouteNames.classes),
+          ),
+          TextButton(
+            child: const Icon(Icons.history),
+            onPressed: () =>
+                Navigator.of(context).pushNamed(RouteNames.activity),
+          ),
+        ],
         appBar: AppBar(
           title: Text(
             viewTitle,
