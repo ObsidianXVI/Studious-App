@@ -2,9 +2,11 @@ part of studious.views;
 
 class FeedbackView extends StatefulWidget {
   final DocumentSnapshot<Submission> subRef;
+  final void Function(VoidCallback) refresh;
 
   const FeedbackView({
     required this.subRef,
+    required this.refresh,
     super.key,
   });
 
@@ -14,10 +16,43 @@ class FeedbackView extends StatefulWidget {
 
 class FeedbackViewState extends State<FeedbackView> {
   final TextEditingController textController = TextEditingController();
-  late final Submission submission = widget.subRef.data()!;
+  late Submission submission = widget.subRef.data()!;
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> comCards = [];
+    final List<Widget> flaggedCards = [];
+    for (int i = 0; i < submission.comments.length; i++) {
+      (submission.comments[i].flagged ? flaggedCards : comCards).addAll([
+        CommentCard(
+          commentItem: submission.comments[i],
+          onFlagged: () async {
+            final oldList = ((await db
+                        .collection('submissions')
+                        .doc(widget.subRef.id)
+                        .get())
+                    .data()!['comments'] as List)
+                .cast<Map<String, dynamic>>();
+            final List<Map<String, dynamic>> newList = oldList;
+            newList[i] = CommentItem(
+              user: submission.comments[i].user,
+              content: submission.comments[i].content,
+              flagged: true,
+            ).toJson();
+            await db
+                .collection('submissions')
+                .doc(widget.subRef.id)
+                .update({'comments': newList});
+            submission =
+                (await Database.submissionsColl.doc(widget.subRef.id).get())
+                    .data()!;
+            setState(() {});
+          },
+          onUpvote: () async {},
+        ),
+        const SizedBox(height: 20),
+      ]);
+    }
     return ViewScaffold(
       viewTitle: 'Feedback View',
       child: Column(
@@ -33,6 +68,7 @@ class FeedbackViewState extends State<FeedbackView> {
               final CommentItem cmItem = CommentItem(
                 user: (await Database.getStudent(studentId!)).data()!.username,
                 content: textController.text,
+                flagged: false,
               );
               await Database.update(
                 Database.submissionsColl,
@@ -44,16 +80,9 @@ class FeedbackViewState extends State<FeedbackView> {
                   ],
                 },
               );
-              final String username =
-                  (await Database.getStudent(studentId!)).data()!.username;
+
               setState(() {
-                submission.comments.insert(
-                  0,
-                  CommentItem(
-                    user: username,
-                    content: textController.text,
-                  ),
-                );
+                submission.comments.insert(0, cmItem);
               });
               textController.clear();
             },
@@ -63,12 +92,11 @@ class FeedbackViewState extends State<FeedbackView> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  for (final cmItem in submission.comments) ...[
-                    CommentCard(
-                      commentItem: cmItem,
-                    ),
-                    const SizedBox(height: 10),
-                  ]
+                  Text('FLAGGED'),
+                  const SizedBox(height: 10),
+                  ...flaggedCards,
+                  const SizedBox(height: 30),
+                  ...comCards,
                 ],
               ),
             ),

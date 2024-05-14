@@ -28,9 +28,13 @@ mixin OverlayTools<T extends StatefulWidget> on State<T> {
 class FeedbackOverlay extends StatefulWidget {
   final Function()? dismiss;
   final List<CommentItem> comments;
+  final String subRef;
+  final void Function(VoidCallback) refresh;
 
   const FeedbackOverlay({
     required this.comments,
+    required this.subRef,
+    required this.refresh,
     this.dismiss,
     super.key,
   });
@@ -43,9 +47,30 @@ class FeedbackOverlayState extends State<FeedbackOverlay> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> commentItems = [];
-    for (CommentItem commentItem in widget.comments) {
-      commentItems.addAll([
-        CommentCard(commentItem: commentItem),
+    final List<Widget> flaggedItems = [];
+    for (int i = 0; i < widget.comments.length; i++) {
+      (widget.comments[i].flagged ? flaggedItems : commentItems).addAll([
+        CommentCard(
+          commentItem: widget.comments[i],
+          onFlagged: () async {
+            final oldList =
+                ((await db.collection('submissions').doc(widget.subRef).get())
+                        .data()!['comments'] as List)
+                    .cast<Map<String, dynamic>>();
+            final List<Map<String, dynamic>> newList = oldList;
+            newList[i] = CommentItem(
+              user: widget.comments[i].user,
+              content: widget.comments[i].content,
+              flagged: true,
+            ).toJson();
+            await db
+                .collection('submissions')
+                .doc(widget.subRef)
+                .update({'comments': newList});
+            setState(() {});
+          },
+          onUpvote: () async {},
+        ),
         const SizedBox(height: 10),
       ]);
     }
@@ -102,7 +127,13 @@ class FeedbackOverlayState extends State<FeedbackOverlay> {
                     ? const Text('No comments yet!')
                     : SingleChildScrollView(
                         child: Column(
-                          children: commentItems,
+                          children: [
+                            Text('FLAGGED'),
+                            const SizedBox(height: 10),
+                            ...flaggedItems,
+                            const SizedBox(height: 30),
+                            ...commentItems,
+                          ],
                         ),
                       ),
               ],

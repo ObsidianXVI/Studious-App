@@ -17,17 +17,26 @@ class ViewScaffold extends StatelessWidget {
         persistentFooterAlignment: AlignmentDirectional.center,
         persistentFooterButtons: [
           TextButton(
-            child: const Icon(Icons.home),
+            child: const Icon(
+              Icons.home,
+              color: StudiousTheme.darkPurple,
+            ),
             onPressed: () => Navigator.of(context).push(MaterialPageRoute(
                 builder: (_) => const Material(child: LaunchView()))),
           ),
           TextButton(
-            child: const Icon(Icons.list_alt),
+            child: const Icon(
+              Icons.list_alt,
+              color: StudiousTheme.darkPurple,
+            ),
             onPressed: () =>
                 Navigator.of(context).pushNamed(RouteNames.classes),
           ),
           TextButton(
-            child: const Icon(Icons.history),
+            child: const Icon(
+              Icons.history,
+              color: StudiousTheme.darkPurple,
+            ),
             onPressed: () =>
                 Navigator.of(context).pushNamed(RouteNames.activity),
           ),

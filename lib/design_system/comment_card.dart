@@ -2,9 +2,13 @@ part of studious.ds;
 
 class CommentCard extends StatefulWidget {
   final CommentItem commentItem;
+  final Future<void> Function() onUpvote;
+  final Future<void> Function() onFlagged;
 
   const CommentCard({
     required this.commentItem,
+    required this.onFlagged,
+    required this.onUpvote,
     super.key,
   });
 
@@ -14,7 +18,14 @@ class CommentCard extends StatefulWidget {
 
 class CommentCardState extends State<CommentCard> {
   bool hasBeenUpvoted = false;
-  bool isSelected = false;
+  bool hasBeenFlagged = false;
+
+  @override
+  void initState() {
+    hasBeenFlagged = widget.commentItem.flagged;
+    // hasBeenUpvoted = widget.commentItem.upvotes;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +63,29 @@ class CommentCardState extends State<CommentCard> {
                   ),
                 ),
               ),
+              Positioned(
+                bottom: 0,
+                right: 0,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: hasBeenFlagged
+                          ? null
+                          : () async {
+                              setState(() {
+                                hasBeenFlagged = true;
+                              });
+                              await widget.onFlagged();
+                            },
+                      child: Icon(
+                        Icons.flag,
+                        color: hasBeenFlagged ? Colors.deepOrange : Colors.grey,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
@@ -59,3 +93,12 @@ class CommentCardState extends State<CommentCard> {
     );
   }
 }
+/**
+ * Text(
+                  widget.commentItem.content,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    color: StudiousTheme.purple,
+                  ),
+                ),
+ */

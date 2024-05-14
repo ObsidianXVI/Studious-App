@@ -295,7 +295,9 @@ class AssignmentViewerState extends State<AssignmentViewer> with OverlayTools {
                             overlay:
                                 OverlayEntry(builder: (BuildContext context) {
                               return FeedbackOverlay(
+                                refresh: setState,
                                 comments: submission.data()!.comments,
+                                subRef: submission.id,
                                 dismiss: () => removeOverlay(),
                               );
                             }),
