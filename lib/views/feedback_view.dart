@@ -37,6 +37,7 @@ class FeedbackViewState extends State<FeedbackView> {
             newList[i] = CommentItem(
               user: submission.comments[i].user,
               content: submission.comments[i].content,
+              upvoteCount: submission.comments[i].upvoteCount,
               flagged: true,
             ).toJson();
             await db
@@ -48,7 +49,30 @@ class FeedbackViewState extends State<FeedbackView> {
                     .data()!;
             setState(() {});
           },
-          onUpvote: () async {},
+          onUpvote: (newCount) async {
+            final oldList = ((await db
+                        .collection('submissions')
+                        .doc(widget.subRef.id)
+                        .get())
+                    .data()!['comments'] as List)
+                .cast<Map<String, dynamic>>();
+            final List<Map<String, dynamic>> newList = oldList;
+            newList[i] = CommentItem(
+              user: submission.comments[i].user,
+              content: submission.comments[i].content,
+              upvoteCount: newCount,
+              flagged: submission.comments[i].flagged,
+            ).toJson();
+
+            await db
+                .collection('submissions')
+                .doc(widget.subRef.id)
+                .update({'comments': newList});
+            submission =
+                (await Database.submissionsColl.doc(widget.subRef.id).get())
+                    .data()!;
+            setState(() {});
+          },
         ),
         const SizedBox(height: 20),
       ]);
@@ -62,12 +86,14 @@ class FeedbackViewState extends State<FeedbackView> {
           const SizedBox(height: 10),
           TextField(controller: textController),
           const SizedBox(height: 10),
+          
           RectTextButton(
             label: 'Add Comment',
             action: () async {
               final CommentItem cmItem = CommentItem(
                 user: (await Database.getStudent(studentId!)).data()!.username,
                 content: textController.text,
+                upvoteCount: 0,
                 flagged: false,
               );
               await Database.update(

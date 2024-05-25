@@ -61,6 +61,7 @@ class FeedbackOverlayState extends State<FeedbackOverlay> {
             newList[i] = CommentItem(
               user: widget.comments[i].user,
               content: widget.comments[i].content,
+              upvoteCount: widget.comments[i].upvoteCount,
               flagged: true,
             ).toJson();
             await db
@@ -69,7 +70,25 @@ class FeedbackOverlayState extends State<FeedbackOverlay> {
                 .update({'comments': newList});
             setState(() {});
           },
-          onUpvote: () async {},
+          onUpvote: (newCount) async {
+            final oldList =
+                ((await db.collection('submissions').doc(widget.subRef).get())
+                        .data()!['comments'] as List)
+                    .cast<Map<String, dynamic>>();
+            final List<Map<String, dynamic>> newList = oldList;
+            newList[i] = CommentItem(
+              user: widget.comments[i].user,
+              content: widget.comments[i].content,
+              upvoteCount: newCount,
+              flagged: widget.comments[i].flagged,
+            ).toJson();
+
+            await db
+                .collection('submissions')
+                .doc(widget.subRef)
+                .update({'comments': newList});
+            setState(() {});
+          },
         ),
         const SizedBox(height: 10),
       ]);

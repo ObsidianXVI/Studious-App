@@ -59,8 +59,10 @@ class Assignment extends StudiousObject {
           for (final mat in (json['allowedFileTypes'] as List).cast<String>())
             MaterialItemType.fromString(mat)
         ],
-        created = DateTime.fromMillisecondsSinceEpoch(json['created'] as int),
-        deadline = DateTime.fromMillisecondsSinceEpoch(json['deadline'] as int);
+        created = DateTime.fromMillisecondsSinceEpoch(json['created'] as int)
+            .subtract(const Duration(days: 30)),
+        deadline = DateTime.fromMillisecondsSinceEpoch(json['deadline'] as int)
+            .subtract(const Duration(days: 30));
 
   @override
   Map<String, Object?> toJson() => {

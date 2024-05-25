@@ -2,7 +2,7 @@ part of studious.ds;
 
 class CommentCard extends StatefulWidget {
   final CommentItem commentItem;
-  final Future<void> Function() onUpvote;
+  final Future<void> Function(int newCount) onUpvote;
   final Future<void> Function() onFlagged;
 
   const CommentCard({
@@ -19,10 +19,12 @@ class CommentCard extends StatefulWidget {
 class CommentCardState extends State<CommentCard> {
   bool hasBeenUpvoted = false;
   bool hasBeenFlagged = false;
+  int upvoteCount = 0;
 
   @override
   void initState() {
     hasBeenFlagged = widget.commentItem.flagged;
+    upvoteCount = widget.commentItem.upvoteCount;
     // hasBeenUpvoted = widget.commentItem.upvotes;
     super.initState();
   }
@@ -81,6 +83,25 @@ class CommentCardState extends State<CommentCard> {
                       child: Icon(
                         Icons.flag,
                         color: hasBeenFlagged ? Colors.deepOrange : Colors.grey,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(upvoteCount.toString()),
+                    TextButton(
+                      onPressed: () async {
+                        setState(() {
+                          upvoteCount = hasBeenUpvoted
+                              ? upvoteCount - 1
+                              : upvoteCount + 1;
+                          hasBeenUpvoted = !hasBeenUpvoted;
+                        });
+
+                        // let DB know if needs to increment or decrement
+                        await widget.onUpvote(upvoteCount);
+                      },
+                      child: Icon(
+                        Icons.arrow_upward,
+                        color: hasBeenUpvoted ? Colors.green : Colors.grey,
                       ),
                     ),
                   ],
